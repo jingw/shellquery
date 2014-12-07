@@ -1,0 +1,8 @@
+.coverage*
+.idea/
+__pycache__/
+*.egg-info/
+*.iml
+*.pyc
+env*/
+htmlcov/
