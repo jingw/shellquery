@@ -1,0 +1,480 @@
+*** Starting uWSGI 2.0.8 (64bit) on [Sat Dec  6 21:15:40 2014] ***
+compiled with version: 4.9.2 on 06 December 2014 21:03:25
+os: Linux-3.17.4-1-ARCH #1 SMP PREEMPT Fri Nov 21 21:14:42 CET 2014
+nodename: jing
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 8
+current working directory: /home/jing/test/myapp
+detected binary path: /home/jing/test/foobar/bin/uwsgi
+your processes number limit is 31345
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uWSGI http bound on :8080 fd 4
+uwsgi socket 0 bound to TCP address 127.0.0.1:54644 (port auto-assigned) fd 3
+Python version: 2.7.8 (default, Sep 24 2014, 18:26:21)  [GCC 4.9.1 20140903 (prerelease)]
+*** Python threads support is disabled. You can enable it with --enable-threads ***
+Python main interpreter initialized at 0x16d3340
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 800448 bytes (781 KB) for 10 cores
+*** Operational MODE: preforking ***
+Loading paste environment: config:/home/jing/test/myapp/development.ini
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x16d3340 pid: 2223 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 2223)
+spawned uWSGI worker 1 (pid: 2229, cores: 1)
+spawned uWSGI worker 2 (pid: 2230, cores: 1)
+spawned uWSGI worker 3 (pid: 2231, cores: 1)
+spawned uWSGI worker 4 (pid: 2232, cores: 1)
+spawned uWSGI worker 5 (pid: 2233, cores: 1)
+spawned uWSGI worker 6 (pid: 2234, cores: 1)
+spawned uWSGI worker 7 (pid: 2235, cores: 1)
+spawned uWSGI worker 8 (pid: 2236, cores: 1)
+spawned uWSGI worker 9 (pid: 2237, cores: 1)
+spawned uWSGI worker 10 (pid: 2238, cores: 1)
+spawned uWSGI http 1 (pid: 2239)
+[pid: 2234|app: 0|req: 1/1] 127.0.0.1 () {38 vars in 565 bytes} [Sat Dec  6 21:15:43 2014] GET /posts/a => generated 0 bytes in 185 msecs (HTTP/1.1 200) 4 headers in 121 bytes (1 switches on core 0)
+[pid: 2234|app: 0|req: 2/2] 127.0.0.1 () {42 vars in 648 bytes} [Sat Dec  6 21:15:44 2014] GET / => generated 0 bytes in 0 msecs (HTTP/1.1 304) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 2238|app: 0|req: 1/3] 127.0.0.1 () {44 vars in 667 bytes} [Sat Dec  6 21:15:44 2014] GET /bg.png => generated 0 bytes in 1 msecs (HTTP/1.1 304) 2 headers in 78 bytes (1 switches on core 0)
+[pid: 2233|app: 0|req: 1/4] 127.0.0.1 () {44 vars in 686 bytes} [Sat Dec  6 21:15:44 2014] GET /pylons-logo.gif => generated 0 bytes in 1 msecs (HTTP/1.1 304) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 2237|app: 0|req: 1/5] 127.0.0.1 () {36 vars in 538 bytes} [Sat Dec  6 21:15:43 2014] GET /posts/new => generated 0 bytes in 978 msecs (HTTP/1.1 200) 4 headers in 121 bytes (1 switches on core 0)
+[pid: 2236|app: 0|req: 1/6] 127.0.0.1 () {36 vars in 530 bytes} [Sat Dec  6 21:15:42 2014] GET /posts => generated 0 bytes in 2338 msecs (HTTP/1.1 200) 4 headers in 121 bytes (1 switches on core 0)
+*** Starting uWSGI 2.0.8 (64bit) on [Sat Dec  6 21:15:50 2014] ***
+compiled with version: 4.9.2 on 06 December 2014 21:03:25
+os: Linux-3.17.4-1-ARCH #1 SMP PREEMPT Fri Nov 21 21:14:42 CET 2014
+nodename: jing
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 8
+current working directory: /home/jing/test/myapp
+detected binary path: /home/jing/test/foobar/bin/uwsgi
+your processes number limit is 31345
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uWSGI http bound on :8080 fd 4
+uwsgi socket 0 bound to TCP address 127.0.0.1:49884 (port auto-assigned) fd 3
+Python version: 2.7.8 (default, Sep 24 2014, 18:26:21)  [GCC 4.9.1 20140903 (prerelease)]
+*** Python threads support is disabled. You can enable it with --enable-threads ***
+Python main interpreter initialized at 0x11c9340
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 800448 bytes (781 KB) for 10 cores
+*** Operational MODE: preforking ***
+Loading paste environment: config:/home/jing/test/myapp/development.ini
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x11c9340 pid: 2240 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 2240)
+spawned uWSGI worker 1 (pid: 2246, cores: 1)
+spawned uWSGI worker 2 (pid: 2247, cores: 1)
+spawned uWSGI worker 3 (pid: 2248, cores: 1)
+spawned uWSGI worker 4 (pid: 2249, cores: 1)
+spawned uWSGI worker 5 (pid: 2250, cores: 1)
+spawned uWSGI worker 6 (pid: 2251, cores: 1)
+spawned uWSGI worker 7 (pid: 2252, cores: 1)
+spawned uWSGI worker 8 (pid: 2253, cores: 1)
+spawned uWSGI worker 9 (pid: 2254, cores: 1)
+spawned uWSGI worker 10 (pid: 2255, cores: 1)
+spawned uWSGI http 1 (pid: 2256)
+[pid: 2255|app: 0|req: 1/1] 127.0.0.1 () {42 vars in 648 bytes} [Sat Dec  6 21:15:52 2014] GET / => generated 0 bytes in 3 msecs (HTTP/1.1 304) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 2255|app: 0|req: 2/2] 127.0.0.1 () {44 vars in 667 bytes} [Sat Dec  6 21:15:52 2014] GET /bg.png => generated 0 bytes in 1 msecs (HTTP/1.1 304) 2 headers in 78 bytes (1 switches on core 0)
+[pid: 2255|app: 0|req: 3/3] 127.0.0.1 () {44 vars in 686 bytes} [Sat Dec  6 21:15:52 2014] GET /pylons-logo.gif => generated 0 bytes in 0 msecs (HTTP/1.1 304) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 2253|app: 0|req: 1/4] 127.0.0.1 () {42 vars in 648 bytes} [Sat Dec  6 21:15:55 2014] GET / => generated 0 bytes in 3 msecs (HTTP/1.1 304) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 2253|app: 0|req: 2/5] 127.0.0.1 () {44 vars in 667 bytes} [Sat Dec  6 21:15:55 2014] GET /bg.png => generated 0 bytes in 0 msecs (HTTP/1.1 304) 2 headers in 78 bytes (1 switches on core 0)
+[pid: 2252|app: 0|req: 1/6] 127.0.0.1 () {44 vars in 686 bytes} [Sat Dec  6 21:15:55 2014] GET /pylons-logo.gif => generated 0 bytes in 3 msecs (HTTP/1.1 304) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 2251|app: 0|req: 1/7] 127.0.0.1 () {38 vars in 565 bytes} [Sat Dec  6 21:15:56 2014] GET /posts/a => generated 0 bytes in 644 msecs (HTTP/1.1 200) 4 headers in 121 bytes (1 switches on core 0)
+[pid: 2255|app: 0|req: 4/8] 127.0.0.1 () {38 vars in 569 bytes} [Sat Dec  6 21:15:56 2014] GET /posts/new => generated 0 bytes in 189 msecs (HTTP/1.1 200) 4 headers in 121 bytes (1 switches on core 0)
+[pid: 2251|app: 0|req: 2/9] 127.0.0.1 () {38 vars in 567 bytes} [Sat Dec  6 21:15:59 2014] GET /posts/new => generated 0 bytes in 37 msecs (HTTP/1.1 200) 4 headers in 121 bytes (1 switches on core 0)
+[pid: 2251|app: 0|req: 3/10] 127.0.0.1 () {42 vars in 647 bytes} [Sat Dec  6 21:16:00 2014] GET / => generated 0 bytes in 1 msecs (HTTP/1.1 304) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 2250|app: 0|req: 1/11] 127.0.0.1 () {44 vars in 666 bytes} [Sat Dec  6 21:16:00 2014] GET /bg.png => generated 0 bytes in 1 msecs (HTTP/1.1 304) 2 headers in 78 bytes (1 switches on core 0)
+[pid: 2254|app: 0|req: 1/12] 127.0.0.1 () {44 vars in 685 bytes} [Sat Dec  6 21:16:00 2014] GET /pylons-logo.gif => generated 0 bytes in 1 msecs (HTTP/1.1 304) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 2255|app: 0|req: 5/13] 127.0.0.1 () {38 vars in 561 bytes} [Sat Dec  6 21:15:57 2014] GET /posts => generated 0 bytes in 3239 msecs (HTTP/1.1 200) 4 headers in 121 bytes (1 switches on core 0)
+[pid: 2252|app: 0|req: 2/14] 127.0.0.1 () {38 vars in 563 bytes} [Sat Dec  6 21:15:59 2014] GET /posts/a => generated 0 bytes in 756 msecs (HTTP/1.1 200) 4 headers in 121 bytes (1 switches on core 0)
+[pid: 2255|app: 0|req: 6/15] 127.0.0.1 () {38 vars in 568 bytes} [Sat Dec  6 21:16:01 2014] GET /posts/new => generated 0 bytes in 875 msecs (HTTP/1.1 200) 4 headers in 121 bytes (1 switches on core 0)
+[pid: 2253|app: 0|req: 3/16] 127.0.0.1 () {42 vars in 647 bytes} [Sat Dec  6 21:16:02 2014] GET / => generated 0 bytes in 0 msecs (HTTP/1.1 304) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 2253|app: 0|req: 4/17] 127.0.0.1 () {44 vars in 666 bytes} [Sat Dec  6 21:16:03 2014] GET /bg.png => generated 0 bytes in 0 msecs (HTTP/1.1 304) 2 headers in 78 bytes (1 switches on core 0)
+[pid: 2255|app: 0|req: 7/18] 127.0.0.1 () {44 vars in 685 bytes} [Sat Dec  6 21:16:03 2014] GET /pylons-logo.gif => generated 0 bytes in 0 msecs (HTTP/1.1 304) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 2252|app: 0|req: 3/19] 127.0.0.1 () {38 vars in 564 bytes} [Sat Dec  6 21:16:02 2014] GET /posts/a => generated 0 bytes in 592 msecs (HTTP/1.1 200) 4 headers in 121 bytes (1 switches on core 0)
+[pid: 2254|app: 0|req: 2/20] 127.0.0.1 () {38 vars in 560 bytes} [Sat Dec  6 21:16:01 2014] GET /posts => generated 0 bytes in 2774 msecs (HTTP/1.1 200) 4 headers in 121 bytes (1 switches on core 0)
+[pid: 2253|app: 0|req: 5/21] 127.0.0.1 () {42 vars in 647 bytes} [Sat Dec  6 21:16:19 2014] GET / => generated 0 bytes in 0 msecs (HTTP/1.1 304) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 2253|app: 0|req: 6/22] 127.0.0.1 () {44 vars in 666 bytes} [Sat Dec  6 21:16:19 2014] GET /bg.png => generated 0 bytes in 0 msecs (HTTP/1.1 304) 2 headers in 78 bytes (1 switches on core 0)
+[pid: 2254|app: 0|req: 3/23] 127.0.0.1 () {44 vars in 685 bytes} [Sat Dec  6 21:16:19 2014] GET /pylons-logo.gif => generated 0 bytes in 0 msecs (HTTP/1.1 304) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 2254|app: 0|req: 4/24] 127.0.0.1 () {38 vars in 564 bytes} [Sat Dec  6 21:16:20 2014] GET /posts/a => generated 0 bytes in 724 msecs (HTTP/1.1 200) 4 headers in 121 bytes (1 switches on core 0)
+[pid: 2249|app: 0|req: 1/25] 127.0.0.1 () {36 vars in 537 bytes} [Sat Dec  6 21:16:20 2014] GET /posts/new => generated 0 bytes in 616 msecs (HTTP/1.1 200) 4 headers in 121 bytes (1 switches on core 0)
+[pid: 2254|app: 0|req: 5/26] 127.0.0.1 () {36 vars in 529 bytes} [Sat Dec  6 21:16:21 2014] GET /posts => generated 0 bytes in 2487 msecs (HTTP/1.1 200) 4 headers in 121 bytes (1 switches on core 0)
+[pid: 2250|app: 0|req: 2/27] 127.0.0.1 () {38 vars in 568 bytes} [Sat Dec  6 21:16:29 2014] GET /posts/new => generated 0 bytes in 97 msecs (HTTP/1.1 200) 4 headers in 121 bytes (1 switches on core 0)
+[pid: 2255|app: 0|req: 8/28] 127.0.0.1 () {42 vars in 648 bytes} [Sat Dec  6 21:16:29 2014] GET / => generated 0 bytes in 0 msecs (HTTP/1.1 304) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 2255|app: 0|req: 9/29] 127.0.0.1 () {44 vars in 667 bytes} [Sat Dec  6 21:16:29 2014] GET /bg.png => generated 0 bytes in 0 msecs (HTTP/1.1 304) 2 headers in 78 bytes (1 switches on core 0)
+[pid: 2255|app: 0|req: 10/30] 127.0.0.1 () {44 vars in 686 bytes} [Sat Dec  6 21:16:29 2014] GET /pylons-logo.gif => generated 0 bytes in 0 msecs (HTTP/1.1 304) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 2253|app: 0|req: 7/31] 127.0.0.1 () {38 vars in 565 bytes} [Sat Dec  6 21:16:29 2014] GET /posts/a => generated 0 bytes in 954 msecs (HTTP/1.1 200) 4 headers in 121 bytes (1 switches on core 0)
+[pid: 2254|app: 0|req: 6/32] 127.0.0.1 () {38 vars in 560 bytes} [Sat Dec  6 21:16:28 2014] GET /posts => generated 0 bytes in 2145 msecs (HTTP/1.1 200) 4 headers in 121 bytes (1 switches on core 0)
+*** Starting uWSGI 2.0.8 (64bit) on [Sat Dec  6 21:17:08 2014] ***
+compiled with version: 4.9.2 on 06 December 2014 21:03:25
+os: Linux-3.17.4-1-ARCH #1 SMP PREEMPT Fri Nov 21 21:14:42 CET 2014
+nodename: jing
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 8
+current working directory: /home/jing/test/myapp
+detected binary path: /home/jing/test/foobar/bin/uwsgi
+your processes number limit is 31345
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uWSGI http bound on :8080 fd 4
+uwsgi socket 0 bound to TCP address 127.0.0.1:38992 (port auto-assigned) fd 3
+Python version: 2.7.8 (default, Sep 24 2014, 18:26:21)  [GCC 4.9.1 20140903 (prerelease)]
+*** Python threads support is disabled. You can enable it with --enable-threads ***
+Python main interpreter initialized at 0x2352340
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 800448 bytes (781 KB) for 10 cores
+*** Operational MODE: preforking ***
+Loading paste environment: config:/home/jing/test/myapp/development.ini
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x2352340 pid: 2264 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 2264)
+spawned uWSGI worker 1 (pid: 2270, cores: 1)
+spawned uWSGI worker 2 (pid: 2271, cores: 1)
+spawned uWSGI worker 3 (pid: 2272, cores: 1)
+spawned uWSGI worker 4 (pid: 2273, cores: 1)
+spawned uWSGI worker 5 (pid: 2274, cores: 1)
+spawned uWSGI worker 6 (pid: 2275, cores: 1)
+spawned uWSGI worker 7 (pid: 2276, cores: 1)
+spawned uWSGI worker 8 (pid: 2277, cores: 1)
+spawned uWSGI worker 9 (pid: 2278, cores: 1)
+spawned uWSGI worker 10 (pid: 2279, cores: 1)
+spawned uWSGI http 1 (pid: 2280)
+[pid: 2277|app: 0|req: 1/1] 127.0.0.1 () {42 vars in 648 bytes} [Sat Dec  6 21:17:10 2014] GET / => generated 0 bytes in 3 msecs (HTTP/1.1 304) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 2277|app: 0|req: 2/2] 127.0.0.1 () {44 vars in 667 bytes} [Sat Dec  6 21:17:10 2014] GET /bg.png => generated 0 bytes in 0 msecs (HTTP/1.1 304) 2 headers in 78 bytes (1 switches on core 0)
+[pid: 2277|app: 0|req: 3/3] 127.0.0.1 () {44 vars in 686 bytes} [Sat Dec  6 21:17:10 2014] GET /pylons-logo.gif => generated 0 bytes in 0 msecs (HTTP/1.1 304) 2 headers in 79 bytes (1 switches on core 0)
+Error - <type 'exceptions.TypeError'>: randint() takes exactly 3 arguments (2 given)
+URL: http://localhost:8080/posts/a
+File '/home/jing/test/foobar/lib/python2.7/site-packages/weberror/errormiddleware.py', line 162 in __call__
+  app_iter = self.application(environ, sr_checker)
+File '/home/jing/test/foobar/lib/python2.7/site-packages/beaker/middleware.py', line 155 in __call__
+  return self.wrap_app(environ, session_start_response)
+File '/home/jing/test/foobar/lib/python2.7/site-packages/routes/middleware.py', line 131 in __call__
+  response = self.app(environ, start_response)
+File '/home/jing/test/foobar/lib/python2.7/site-packages/pylons/wsgiapp.py', line 103 in __call__
+  response = self.dispatch(controller, environ, start_response)
+File '/home/jing/test/foobar/lib/python2.7/site-packages/pylons/wsgiapp.py', line 313 in dispatch
+  return controller(environ, start_response)
+File './myapp/lib/base.py', line 15 in __call__
+  return WSGIController.__call__(self, environ, start_response)
+File '/home/jing/test/foobar/lib/python2.7/site-packages/pylons/controllers/core.py', line 214 in __call__
+  response = self._dispatch_call()
+File '/home/jing/test/foobar/lib/python2.7/site-packages/pylons/controllers/core.py', line 164 in _dispatch_call
+  response = self._inspect_call(func)
+File '/home/jing/test/foobar/lib/python2.7/site-packages/pylons/controllers/core.py', line 107 in _inspect_call
+  result = self._perform_call(func, args)
+File '/home/jing/test/foobar/lib/python2.7/site-packages/pylons/controllers/core.py', line 57 in _perform_call
+  return func(**args)
+File './myapp/controllers/posts.py', line 60 in show
+  return 'a' * random.randint(9999)
+TypeError: randint() takes exactly 3 arguments (2 given)
+
+
+CGI Variables
+-------------
+  HTTP_ACCEPT: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+  HTTP_ACCEPT_ENCODING: 'gzip, deflate'
+  HTTP_ACCEPT_LANGUAGE: 'en-US,en;q=0.5'
+  HTTP_CONNECTION: 'keep-alive'
+  HTTP_DNT: '1'
+  HTTP_HOST: 'localhost:8080'
+  HTTP_USER_AGENT: 'Mozilla/5.0 (X11; Linux x86_64; rv:34.0) Gecko/20100101 Firefox/34.0'
+  PATH_INFO: '/posts/a'
+  REMOTE_ADDR: '127.0.0.1'
+  REMOTE_PORT: '14277'
+  REQUEST_METHOD: 'GET'
+  REQUEST_URI: '/posts/a'
+  SERVER_NAME: 'jing'
+  SERVER_PORT: '8080'
+  SERVER_PROTOCOL: 'HTTP/1.1'
+  UWSGI_ROUTER: 'http'
+
+
+WSGI Variables
+--------------
+  application: <beaker.middleware.SessionMiddleware object at 0x7f7dfca02350>
+  beaker.get_session: <bound method SessionMiddleware._get_session of <beaker.middleware.SessionMiddleware object at 0x7f7dfca02350>>
+  beaker.session: {'_accessed_time': 1417929432.045358, '_creation_time': 1417929432.045358}
+  paste.registry: <paste.registry.Registry object at 0x7f7dfca02550>
+  paste.throw_errors: True
+  pylons.action_method: <bound method PostsController.show of <myapp.controllers.posts.PostsController object at 0x7f7dfca02a90>>
+  pylons.controller: <myapp.controllers.posts.PostsController object at 0x7f7dfca02a90>
+  pylons.environ_config: {'session': 'beaker.session', 'cache': 'beaker.cache'}
+  pylons.log_debug: False
+  pylons.pylons: <pylons.util.PylonsContext object at 0x7f7e0057bd10>
+  pylons.routes_dict: {'action': u'show', 'controller': u'posts', 'id': u'a'}
+  routes.route: <routes.route.Route object at 0x7f7dfca020d0>
+  routes.url: <routes.util.URLGenerator object at 0x7f7dfca02610>
+  uwsgi.node: 'jing'
+  uwsgi.version: '2.0.8'
+  wsgi process: 'Multiprocess'
+  wsgi.file_wrapper: <built-in function uwsgi_sendfile>
+  wsgiorg.routing_args: (<routes.util.URLGenerator object at 0x7f7dfca02610>, {'action': u'show', 'controller': u'posts', 'id': u'a'})
+------------------------------------------------------------
+[pid: 2277|app: 0|req: 4/4] 127.0.0.1 () {36 vars in 534 bytes} [Sat Dec  6 21:17:11 2014] GET /posts/a => generated 813 bytes in 302 msecs (HTTP/1.1 500) 4 headers in 142 bytes (1 switches on core 0)
+[pid: 2276|app: 0|req: 1/5] 127.0.0.1 () {38 vars in 562 bytes} [Sat Dec  6 21:17:12 2014] GET /error/style/black.css => generated 1518 bytes in 22 msecs (HTTP/1.1 200) 1 headers in 43 bytes (1 switches on core 0)
+[pid: 2279|app: 0|req: 1/6] 127.0.0.1 () {36 vars in 562 bytes} [Sat Dec  6 21:17:12 2014] GET /error/img/favicon.ico => generated 2862 bytes in 11 msecs (HTTP/1.1 200) 1 headers in 47 bytes (1 switches on core 0)
+[pid: 2279|app: 0|req: 2/7] 127.0.0.1 () {38 vars in 581 bytes} [Sat Dec  6 21:17:12 2014] GET /error/img/bg.png => generated 339 bytes in 1 msecs (HTTP/1.1 200) 1 headers in 44 bytes (1 switches on core 0)
+[pid: 2279|app: 0|req: 3/8] 127.0.0.1 () {36 vars in 532 bytes} [Sat Dec  6 21:17:12 2014] GET /error/img/favicon.ico => generated 2862 bytes in 1 msecs (HTTP/1.1 200) 1 headers in 47 bytes (1 switches on core 0)
+Error - <type 'exceptions.TypeError'>: randint() takes exactly 3 arguments (2 given)
+URL: http://localhost:8080/posts/new
+File '/home/jing/test/foobar/lib/python2.7/site-packages/weberror/errormiddleware.py', line 162 in __call__
+  app_iter = self.application(environ, sr_checker)
+File '/home/jing/test/foobar/lib/python2.7/site-packages/beaker/middleware.py', line 155 in __call__
+  return self.wrap_app(environ, session_start_response)
+File '/home/jing/test/foobar/lib/python2.7/site-packages/routes/middleware.py', line 131 in __call__
+  response = self.app(environ, start_response)
+File '/home/jing/test/foobar/lib/python2.7/site-packages/pylons/wsgiapp.py', line 103 in __call__
+  response = self.dispatch(controller, environ, start_response)
+File '/home/jing/test/foobar/lib/python2.7/site-packages/pylons/wsgiapp.py', line 313 in dispatch
+  return controller(environ, start_response)
+File './myapp/lib/base.py', line 15 in __call__
+  return WSGIController.__call__(self, environ, start_response)
+File '/home/jing/test/foobar/lib/python2.7/site-packages/pylons/controllers/core.py', line 214 in __call__
+  response = self._dispatch_call()
+File '/home/jing/test/foobar/lib/python2.7/site-packages/pylons/controllers/core.py', line 164 in _dispatch_call
+  response = self._inspect_call(func)
+File '/home/jing/test/foobar/lib/python2.7/site-packages/pylons/controllers/core.py', line 107 in _inspect_call
+  result = self._perform_call(func, args)
+File '/home/jing/test/foobar/lib/python2.7/site-packages/pylons/controllers/core.py', line 57 in _perform_call
+  return func(**args)
+File './myapp/controllers/posts.py', line 35 in new
+  return 'a' * random.randint(9999)
+TypeError: randint() takes exactly 3 arguments (2 given)
+
+
+CGI Variables
+-------------
+  HTTP_ACCEPT: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+  HTTP_ACCEPT_ENCODING: 'gzip, deflate'
+  HTTP_ACCEPT_LANGUAGE: 'en-US,en;q=0.5'
+  HTTP_CONNECTION: 'keep-alive'
+  HTTP_DNT: '1'
+  HTTP_HOST: 'localhost:8080'
+  HTTP_USER_AGENT: 'Mozilla/5.0 (X11; Linux x86_64; rv:34.0) Gecko/20100101 Firefox/34.0'
+  PATH_INFO: '/posts/new'
+  REMOTE_ADDR: '127.0.0.1'
+  REMOTE_PORT: '16837'
+  REQUEST_METHOD: 'GET'
+  REQUEST_URI: '/posts/new'
+  SERVER_NAME: 'jing'
+  SERVER_PORT: '8080'
+  SERVER_PROTOCOL: 'HTTP/1.1'
+  UWSGI_ROUTER: 'http'
+
+
+WSGI Variables
+--------------
+  application: <beaker.middleware.SessionMiddleware object at 0x7f7dfca02350>
+  beaker.get_session: <bound method SessionMiddleware._get_session of <beaker.middleware.SessionMiddleware object at 0x7f7dfca02350>>
+  beaker.session: {'_accessed_time': 1417929433.360782, '_creation_time': 1417929433.360782}
+  paste.registry: <paste.registry.Registry object at 0x7f7dfc9c4510>
+  paste.throw_errors: True
+  pylons.action_method: <bound method PostsController.new of <myapp.controllers.posts.PostsController object at 0x7f7dfc9c47d0>>
+  pylons.controller: <myapp.controllers.posts.PostsController object at 0x7f7dfc9c47d0>
+  pylons.environ_config: {'session': 'beaker.session', 'cache': 'beaker.cache'}
+  pylons.log_debug: False
+  pylons.pylons: <pylons.util.PylonsContext object at 0x7f7dfc9c4750>
+  pylons.routes_dict: {'action': u'new', 'controller': u'posts'}
+  routes.route: <routes.route.Route object at 0x7f7dfc9ecd10>
+  routes.url: <routes.util.URLGenerator object at 0x7f7dfc9c4610>
+  uwsgi.node: 'jing'
+  uwsgi.version: '2.0.8'
+  wsgi process: 'Multiprocess'
+  wsgi.file_wrapper: <built-in function uwsgi_sendfile>
+  wsgiorg.routing_args: (<routes.util.URLGenerator object at 0x7f7dfc9c4610>, {'action': u'new', 'controller': u'posts'})
+------------------------------------------------------------
+[pid: 2277|app: 0|req: 5/9] 127.0.0.1 () {36 vars in 538 bytes} [Sat Dec  6 21:17:12 2014] GET /posts/new => generated 813 bytes in 861 msecs (HTTP/1.1 500) 4 headers in 142 bytes (1 switches on core 0)
+[pid: 2279|app: 0|req: 4/10] 127.0.0.1 () {38 vars in 564 bytes} [Sat Dec  6 21:17:13 2014] GET /error/style/black.css => generated 1518 bytes in 2 msecs (HTTP/1.1 200) 1 headers in 43 bytes (1 switches on core 0)
+[pid: 2277|app: 0|req: 6/11] 127.0.0.1 () {36 vars in 562 bytes} [Sat Dec  6 21:17:13 2014] GET /error/img/favicon.ico => generated 2862 bytes in 2 msecs (HTTP/1.1 200) 1 headers in 47 bytes (1 switches on core 0)
+[pid: 2274|app: 0|req: 1/12] 127.0.0.1 () {38 vars in 581 bytes} [Sat Dec  6 21:17:13 2014] GET /error/img/bg.png => generated 339 bytes in 12 msecs (HTTP/1.1 200) 1 headers in 44 bytes (1 switches on core 0)
+Error - <type 'exceptions.TypeError'>: randint() takes exactly 3 arguments (2 given)
+URL: http://localhost:8080/posts
+File '/home/jing/test/foobar/lib/python2.7/site-packages/weberror/errormiddleware.py', line 162 in __call__
+  app_iter = self.application(environ, sr_checker)
+File '/home/jing/test/foobar/lib/python2.7/site-packages/beaker/middleware.py', line 155 in __call__
+  return self.wrap_app(environ, session_start_response)
+File '/home/jing/test/foobar/lib/python2.7/site-packages/routes/middleware.py', line 131 in __call__
+  response = self.app(environ, start_response)
+File '/home/jing/test/foobar/lib/python2.7/site-packages/pylons/wsgiapp.py', line 103 in __call__
+  response = self.dispatch(controller, environ, start_response)
+File '/home/jing/test/foobar/lib/python2.7/site-packages/pylons/wsgiapp.py', line 313 in dispatch
+  return controller(environ, start_response)
+File './myapp/lib/base.py', line 15 in __call__
+  return WSGIController.__call__(self, environ, start_response)
+File '/home/jing/test/foobar/lib/python2.7/site-packages/pylons/controllers/core.py', line 214 in __call__
+  response = self._dispatch_call()
+File '/home/jing/test/foobar/lib/python2.7/site-packages/pylons/controllers/core.py', line 164 in _dispatch_call
+  response = self._inspect_call(func)
+File '/home/jing/test/foobar/lib/python2.7/site-packages/pylons/controllers/core.py', line 107 in _inspect_call
+  result = self._perform_call(func, args)
+File '/home/jing/test/foobar/lib/python2.7/site-packages/pylons/controllers/core.py', line 57 in _perform_call
+  return func(**args)
+File './myapp/controllers/posts.py', line 22 in index
+  return 'a' * random.randint(9999)
+TypeError: randint() takes exactly 3 arguments (2 given)
+
+
+CGI Variables
+-------------
+  HTTP_ACCEPT: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+  HTTP_ACCEPT_ENCODING: 'gzip, deflate'
+  HTTP_ACCEPT_LANGUAGE: 'en-US,en;q=0.5'
+  HTTP_CONNECTION: 'keep-alive'
+  HTTP_DNT: '1'
+  HTTP_HOST: 'localhost:8080'
+  HTTP_USER_AGENT: 'Mozilla/5.0 (X11; Linux x86_64; rv:34.0) Gecko/20100101 Firefox/34.0'
+  PATH_INFO: '/posts'
+  REMOTE_ADDR: '127.0.0.1'
+  REMOTE_PORT: '17349'
+  REQUEST_METHOD: 'GET'
+  REQUEST_URI: '/posts'
+  SERVER_NAME: 'jing'
+  SERVER_PORT: '8080'
+  SERVER_PROTOCOL: 'HTTP/1.1'
+  UWSGI_ROUTER: 'http'
+
+
+WSGI Variables
+--------------
+  application: <beaker.middleware.SessionMiddleware object at 0x7f7dfca02350>
+  beaker.get_session: <bound method SessionMiddleware._get_session of <beaker.middleware.SessionMiddleware object at 0x7f7dfca02350>>
+  beaker.session: {'_accessed_time': 1417929434.510374, '_creation_time': 1417929434.510374}
+  paste.registry: <paste.registry.Registry object at 0x7f7dfca024d0>
+  paste.throw_errors: True
+  pylons.action_method: <bound method PostsController.index of <myapp.controllers.posts.PostsController object at 0x7f7dfca02a90>>
+  pylons.controller: <myapp.controllers.posts.PostsController object at 0x7f7dfca02a90>
+  pylons.environ_config: {'session': 'beaker.session', 'cache': 'beaker.cache'}
+  pylons.log_debug: False
+  pylons.pylons: <pylons.util.PylonsContext object at 0x7f7e0057bd10>
+  pylons.routes_dict: {'action': u'index', 'controller': u'posts'}
+  routes.route: <routes.route.Route object at 0x7f7dfc9ecc10>
+  routes.url: <routes.util.URLGenerator object at 0x7f7dfca02610>
+  uwsgi.node: 'jing'
+  uwsgi.version: '2.0.8'
+  wsgi process: 'Multiprocess'
+  wsgi.file_wrapper: <built-in function uwsgi_sendfile>
+  wsgiorg.routing_args: (<routes.util.URLGenerator object at 0x7f7dfca02610>, {'action': u'index', 'controller': u'posts'})
+------------------------------------------------------------
+[pid: 2278|app: 0|req: 1/13] 127.0.0.1 () {36 vars in 530 bytes} [Sat Dec  6 21:17:13 2014] GET /posts => generated 813 bytes in 1341 msecs (HTTP/1.1 500) 4 headers in 142 bytes (1 switches on core 0)
+[pid: 2277|app: 0|req: 7/14] 127.0.0.1 () {38 vars in 560 bytes} [Sat Dec  6 21:17:14 2014] GET /error/style/black.css => generated 1518 bytes in 2 msecs (HTTP/1.1 200) 1 headers in 43 bytes (1 switches on core 0)
+[pid: 2276|app: 0|req: 2/15] 127.0.0.1 () {40 vars in 612 bytes} [Sat Dec  6 21:17:14 2014] GET /error/img/bg.png => generated 339 bytes in 1 msecs (HTTP/1.1 200) 1 headers in 44 bytes (1 switches on core 0)
+[pid: 2276|app: 0|req: 3/16] 127.0.0.1 () {36 vars in 562 bytes} [Sat Dec  6 21:17:14 2014] GET /error/img/favicon.ico => generated 2862 bytes in 1 msecs (HTTP/1.1 200) 1 headers in 47 bytes (1 switches on core 0)
+*** Starting uWSGI 2.0.8 (64bit) on [Sat Dec  6 21:17:52 2014] ***
+compiled with version: 4.9.2 on 06 December 2014 21:03:25
+os: Linux-3.17.4-1-ARCH #1 SMP PREEMPT Fri Nov 21 21:14:42 CET 2014
+nodename: jing
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 8
+current working directory: /home/jing/test/myapp
+detected binary path: /home/jing/test/foobar/bin/uwsgi
+your processes number limit is 31345
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uWSGI http bound on :8080 fd 4
+uwsgi socket 0 bound to TCP address 127.0.0.1:47480 (port auto-assigned) fd 3
+Python version: 2.7.8 (default, Sep 24 2014, 18:26:21)  [GCC 4.9.1 20140903 (prerelease)]
+*** Python threads support is disabled. You can enable it with --enable-threads ***
+Python main interpreter initialized at 0x9de340
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 800448 bytes (781 KB) for 10 cores
+*** Operational MODE: preforking ***
+Loading paste environment: config:/home/jing/test/myapp/development.ini
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x9de340 pid: 2290 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 2290)
+spawned uWSGI worker 1 (pid: 2296, cores: 1)
+spawned uWSGI worker 2 (pid: 2297, cores: 1)
+spawned uWSGI worker 3 (pid: 2298, cores: 1)
+spawned uWSGI worker 4 (pid: 2299, cores: 1)
+spawned uWSGI worker 5 (pid: 2300, cores: 1)
+spawned uWSGI worker 6 (pid: 2301, cores: 1)
+spawned uWSGI worker 7 (pid: 2302, cores: 1)
+spawned uWSGI worker 8 (pid: 2303, cores: 1)
+spawned uWSGI worker 9 (pid: 2304, cores: 1)
+spawned uWSGI worker 10 (pid: 2305, cores: 1)
+spawned uWSGI http 1 (pid: 2306)
+[pid: 2303|app: 0|req: 1/1] 127.0.0.1 () {42 vars in 648 bytes} [Sat Dec  6 21:17:55 2014] GET / => generated 0 bytes in 2 msecs (HTTP/1.1 304) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 2303|app: 0|req: 2/2] 127.0.0.1 () {44 vars in 667 bytes} [Sat Dec  6 21:17:55 2014] GET /bg.png => generated 0 bytes in 0 msecs (HTTP/1.1 304) 2 headers in 78 bytes (1 switches on core 0)
+[pid: 2303|app: 0|req: 3/3] 127.0.0.1 () {44 vars in 686 bytes} [Sat Dec  6 21:17:55 2014] GET /pylons-logo.gif => generated 0 bytes in 0 msecs (HTTP/1.1 304) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 2303|app: 0|req: 4/4] 127.0.0.1 () {36 vars in 534 bytes} [Sat Dec  6 21:17:55 2014] GET /posts/a => generated 1062 bytes in 420 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2303|app: 0|req: 5/5] 127.0.0.1 () {36 vars in 538 bytes} [Sat Dec  6 21:17:56 2014] GET /posts/new => generated 445 bytes in 473 msecs (HTTP/1.1 200) 4 headers in 123 bytes (1 switches on core 0)
+[pid: 2303|app: 0|req: 6/6] 127.0.0.1 () {36 vars in 530 bytes} [Sat Dec  6 21:17:56 2014] GET /posts => generated 8692 bytes in 603 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2305|app: 0|req: 1/7] 127.0.0.1 () {38 vars in 569 bytes} [Sat Dec  6 21:17:59 2014] GET /posts/new => generated 1079 bytes in 61 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2303|app: 0|req: 7/8] 127.0.0.1 () {38 vars in 565 bytes} [Sat Dec  6 21:17:58 2014] GET /posts/a => generated 8467 bytes in 702 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2303|app: 0|req: 8/9] 127.0.0.1 () {42 vars in 648 bytes} [Sat Dec  6 21:18:00 2014] GET / => generated 0 bytes in 0 msecs (HTTP/1.1 304) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 2305|app: 0|req: 2/10] 127.0.0.1 () {44 vars in 667 bytes} [Sat Dec  6 21:18:00 2014] GET /bg.png => generated 0 bytes in 1 msecs (HTTP/1.1 304) 2 headers in 78 bytes (1 switches on core 0)
+[pid: 2305|app: 0|req: 3/11] 127.0.0.1 () {44 vars in 686 bytes} [Sat Dec  6 21:18:00 2014] GET /pylons-logo.gif => generated 0 bytes in 0 msecs (HTTP/1.1 304) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 2304|app: 0|req: 1/12] 127.0.0.1 () {38 vars in 561 bytes} [Sat Dec  6 21:17:59 2014] GET /posts => generated 529 bytes in 1279 msecs (HTTP/1.1 200) 4 headers in 123 bytes (1 switches on core 0)
+[pid: 2303|app: 0|req: 9/13] 127.0.0.1 () {42 vars in 648 bytes} [Sat Dec  6 21:18:02 2014] GET / => generated 0 bytes in 1 msecs (HTTP/1.1 304) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 2304|app: 0|req: 2/14] 127.0.0.1 () {44 vars in 667 bytes} [Sat Dec  6 21:18:02 2014] GET /bg.png => generated 0 bytes in 1 msecs (HTTP/1.1 304) 2 headers in 78 bytes (1 switches on core 0)
+[pid: 2301|app: 0|req: 1/15] 127.0.0.1 () {44 vars in 686 bytes} [Sat Dec  6 21:18:02 2014] GET /pylons-logo.gif => generated 0 bytes in 1 msecs (HTTP/1.1 304) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 2304|app: 0|req: 3/16] 127.0.0.1 () {38 vars in 565 bytes} [Sat Dec  6 21:18:03 2014] GET /posts/a => generated 7818 bytes in 318 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2304|app: 0|req: 4/17] 127.0.0.1 () {38 vars in 569 bytes} [Sat Dec  6 21:18:03 2014] GET /posts/new => generated 4129 bytes in 584 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2302|app: 0|req: 1/18] 127.0.0.1 () {38 vars in 561 bytes} [Sat Dec  6 21:18:04 2014] GET /posts => generated 8425 bytes in 680 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2304|app: 0|req: 5/19] 127.0.0.1 () {38 vars in 561 bytes} [Sat Dec  6 21:18:05 2014] GET /posts => generated 8630 bytes in 615 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2304|app: 0|req: 6/20] 127.0.0.1 () {38 vars in 569 bytes} [Sat Dec  6 21:18:06 2014] GET /posts/new => generated 4910 bytes in 488 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2302|app: 0|req: 2/21] 127.0.0.1 () {38 vars in 565 bytes} [Sat Dec  6 21:18:06 2014] GET /posts/a => generated 8130 bytes in 320 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2302|app: 0|req: 3/22] 127.0.0.1 () {38 vars in 569 bytes} [Sat Dec  6 21:18:08 2014] GET /posts/new => generated 9010 bytes in 450 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2301|app: 0|req: 2/23] 127.0.0.1 () {38 vars in 565 bytes} [Sat Dec  6 21:18:08 2014] GET /posts/a => generated 6065 bytes in 701 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2302|app: 0|req: 4/24] 127.0.0.1 () {38 vars in 569 bytes} [Sat Dec  6 21:18:10 2014] GET /posts/new => generated 3126 bytes in 82 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2304|app: 0|req: 7/25] 127.0.0.1 () {38 vars in 561 bytes} [Sat Dec  6 21:18:07 2014] GET /posts => generated 5203 bytes in 2869 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2302|app: 0|req: 5/26] 127.0.0.1 () {38 vars in 565 bytes} [Sat Dec  6 21:18:10 2014] GET /posts/a => generated 9954 bytes in 556 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2304|app: 0|req: 8/27] 127.0.0.1 () {38 vars in 561 bytes} [Sat Dec  6 21:18:11 2014] GET /posts => generated 7604 bytes in 57 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2304|app: 0|req: 9/28] 127.0.0.1 () {38 vars in 569 bytes} [Sat Dec  6 21:18:11 2014] GET /posts/new => generated 2096 bytes in 295 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2302|app: 0|req: 6/29] 127.0.0.1 () {38 vars in 565 bytes} [Sat Dec  6 21:18:11 2014] GET /posts/a => generated 2257 bytes in 759 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2304|app: 0|req: 10/30] 127.0.0.1 () {36 vars in 534 bytes} [Sat Dec  6 21:18:25 2014] GET /posts/1 => generated 1603 bytes in 188 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2305|app: 0|req: 4/31] 127.0.0.1 () {36 vars in 534 bytes} [Sat Dec  6 21:18:26 2014] GET /posts/3 => generated 4634 bytes in 806 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2305|app: 0|req: 5/32] 127.0.0.1 () {36 vars in 534 bytes} [Sat Dec  6 21:18:28 2014] GET /posts/5 => generated 506 bytes in 239 msecs (HTTP/1.1 200) 4 headers in 123 bytes (1 switches on core 0)
+[pid: 2300|app: 0|req: 1/33] 127.0.0.1 () {38 vars in 565 bytes} [Sat Dec  6 21:18:29 2014] GET /posts/5 => generated 1172 bytes in 918 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2304|app: 0|req: 11/34] 127.0.0.1 () {36 vars in 534 bytes} [Sat Dec  6 21:18:31 2014] GET /posts/9 => generated 1004 bytes in 535 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2302|app: 0|req: 7/35] 127.0.0.1 () {36 vars in 536 bytes} [Sat Dec  6 21:18:33 2014] GET /posts/99 => generated 8608 bytes in 609 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2302|app: 0|req: 8/36] 127.0.0.1 () {42 vars in 648 bytes} [Sat Dec  6 21:18:35 2014] GET / => generated 0 bytes in 1 msecs (HTTP/1.1 304) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 2302|app: 0|req: 9/37] 127.0.0.1 () {44 vars in 667 bytes} [Sat Dec  6 21:18:35 2014] GET /bg.png => generated 0 bytes in 0 msecs (HTTP/1.1 304) 2 headers in 78 bytes (1 switches on core 0)
+[pid: 2303|app: 0|req: 10/38] 127.0.0.1 () {44 vars in 686 bytes} [Sat Dec  6 21:18:35 2014] GET /pylons-logo.gif => generated 0 bytes in 0 msecs (HTTP/1.1 304) 2 headers in 79 bytes (1 switches on core 0)
+[pid: 2305|app: 0|req: 6/39] 127.0.0.1 () {38 vars in 569 bytes} [Sat Dec  6 21:18:39 2014] GET /posts/new => generated 422 bytes in 533 msecs (HTTP/1.1 200) 4 headers in 123 bytes (1 switches on core 0)
+[pid: 2301|app: 0|req: 3/40] 127.0.0.1 () {38 vars in 561 bytes} [Sat Dec  6 21:18:37 2014] GET /posts => generated 9286 bytes in 1983 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2303|app: 0|req: 11/41] 127.0.0.1 () {36 vars in 538 bytes} [Sat Dec  6 21:18:42 2014] GET /posts/123 => generated 561 bytes in 414 msecs (HTTP/1.1 200) 4 headers in 123 bytes (1 switches on core 0)
+[pid: 2304|app: 0|req: 12/42] 127.0.0.1 () {38 vars in 561 bytes} [Sat Dec  6 21:18:43 2014] GET /posts => generated 9491 bytes in 66 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2302|app: 0|req: 10/43] 127.0.0.1 () {38 vars in 561 bytes} [Sat Dec  6 21:18:47 2014] GET /posts => generated 4004 bytes in 1802 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2300|app: 0|req: 2/44] 127.0.0.1 () {36 vars in 532 bytes} [Sat Dec  6 21:18:52 2014] GET /posts/ => generated 792 bytes in 3 msecs (HTTP/1.1 404) 4 headers in 130 bytes (1 switches on core 0)
+[pid: 2304|app: 0|req: 13/45] 127.0.0.1 () {38 vars in 561 bytes} [Sat Dec  6 21:18:52 2014] GET /error/style/black.css => generated 1518 bytes in 2 msecs (HTTP/1.1 200) 1 headers in 43 bytes (1 switches on core 0)
+[pid: 2304|app: 0|req: 14/46] 127.0.0.1 () {38 vars in 581 bytes} [Sat Dec  6 21:18:52 2014] GET /error/img/bg.png => generated 339 bytes in 1 msecs (HTTP/1.1 200) 1 headers in 44 bytes (1 switches on core 0)
+[pid: 2303|app: 0|req: 12/47] 127.0.0.1 () {36 vars in 562 bytes} [Sat Dec  6 21:18:52 2014] GET /error/img/favicon.ico => generated 2862 bytes in 2 msecs (HTTP/1.1 200) 1 headers in 47 bytes (1 switches on core 0)
+[pid: 2301|app: 0|req: 4/48] 127.0.0.1 () {36 vars in 532 bytes} [Sat Dec  6 21:18:52 2014] GET /posts/ => generated 792 bytes in 3 msecs (HTTP/1.1 404) 4 headers in 130 bytes (1 switches on core 0)
+[pid: 2301|app: 0|req: 5/49] 127.0.0.1 () {38 vars in 561 bytes} [Sat Dec  6 21:18:52 2014] GET /error/style/black.css => generated 1518 bytes in 1 msecs (HTTP/1.1 200) 1 headers in 43 bytes (1 switches on core 0)
+[pid: 2301|app: 0|req: 6/50] 127.0.0.1 () {38 vars in 581 bytes} [Sat Dec  6 21:18:52 2014] GET /error/img/bg.png => generated 339 bytes in 1 msecs (HTTP/1.1 200) 1 headers in 44 bytes (1 switches on core 0)
+[pid: 2303|app: 0|req: 13/51] 127.0.0.1 () {36 vars in 562 bytes} [Sat Dec  6 21:18:52 2014] GET /error/img/favicon.ico => generated 2862 bytes in 1 msecs (HTTP/1.1 200) 1 headers in 47 bytes (1 switches on core 0)
+[pid: 2302|app: 0|req: 11/52] 127.0.0.1 () {38 vars in 561 bytes} [Sat Dec  6 21:18:50 2014] GET /posts => generated 63 bytes in 2902 msecs (HTTP/1.1 200) 4 headers in 122 bytes (1 switches on core 0)
+[pid: 2303|app: 0|req: 14/53] 127.0.0.1 () {36 vars in 530 bytes} [Sat Dec  6 21:18:54 2014] GET /posts => generated 5144 bytes in 2977 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2303|app: 0|req: 15/54] 127.0.0.1 () {36 vars in 530 bytes} [Sat Dec  6 21:18:57 2014] GET /posts => generated 6114 bytes in 4273 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2304|app: 0|req: 15/55] 127.0.0.1 () {36 vars in 530 bytes} [Sat Dec  6 21:19:01 2014] GET /posts => generated 3558 bytes in 2415 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2304|app: 0|req: 16/56] 127.0.0.1 () {36 vars in 530 bytes} [Sat Dec  6 21:19:04 2014] GET /posts => generated 1480 bytes in 3770 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2305|app: 0|req: 7/57] 127.0.0.1 () {36 vars in 530 bytes} [Sat Dec  6 21:19:07 2014] GET /posts => generated 790 bytes in 152 msecs (HTTP/1.1 200) 4 headers in 123 bytes (1 switches on core 0)
+[pid: 2304|app: 0|req: 17/58] 127.0.0.1 () {36 vars in 530 bytes} [Sat Dec  6 21:19:08 2014] GET /posts => generated 4050 bytes in 2337 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2300|app: 0|req: 3/59] 127.0.0.1 () {38 vars in 569 bytes} [Sat Dec  6 21:19:11 2014] GET /posts/123 => generated 3848 bytes in 29 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2302|app: 0|req: 12/60] 127.0.0.1 () {38 vars in 569 bytes} [Sat Dec  6 21:19:12 2014] GET /posts/new => generated 5851 bytes in 960 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2304|app: 0|req: 18/61] 127.0.0.1 () {36 vars in 530 bytes} [Sat Dec  6 21:19:10 2014] GET /posts => generated 631 bytes in 3779 msecs (HTTP/1.1 200) 4 headers in 123 bytes (1 switches on core 0)
+[pid: 2305|app: 0|req: 8/62] 127.0.0.1 () {36 vars in 538 bytes} [Sat Dec  6 21:19:17 2014] GET /posts/123 => generated 7757 bytes in 294 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2302|app: 0|req: 13/63] 127.0.0.1 () {36 vars in 530 bytes} [Sat Dec  6 21:19:14 2014] GET /posts => generated 9429 bytes in 3945 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2302|app: 0|req: 14/64] 127.0.0.1 () {36 vars in 534 bytes} [Sat Dec  6 21:19:18 2014] GET /posts/1 => generated 8614 bytes in 532 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2303|app: 0|req: 16/65] 127.0.0.1 () {36 vars in 530 bytes} [Sat Dec  6 21:19:18 2014] GET /posts => generated 1718 bytes in 2859 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
+[pid: 2304|app: 0|req: 19/66] 127.0.0.1 () {36 vars in 530 bytes} [Sat Dec  6 21:19:21 2014] GET /posts => generated 3366 bytes in 2907 msecs (HTTP/1.1 200) 4 headers in 124 bytes (1 switches on core 0)
