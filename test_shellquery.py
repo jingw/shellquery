@@ -161,9 +161,11 @@ class TestShellQuery(unittest.TestCase):
 
     def test_examples(self):
         """Verify the examples in the argparse help text"""
+        progname = sys.executable + ' ' + shellquery.__file__
         for _name, cmd, expected in shellquery.EXAMPLES:
             output = subprocess.check_output(
-                cmd.format(name=sys.executable + ' ' + shellquery.__file__),
+                # echo might be a shell builtin without support for the -e option
+                cmd.replace('echo', '/bin/echo').format(name=progname),
                 shell=True,
                 cwd=os.path.join(os.path.dirname(__file__), 'test_data'),
             )

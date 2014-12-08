@@ -58,6 +58,9 @@ You'll need Python 2.7 or Python 3. (Of course, you might want to double check t
 Development testing
 ===================
 
+.. image:: https://travis-ci.org/jingw/shellquery.svg?branch=master
+    :target: https://travis-ci.org/jingw/shellquery
+
 Python 3::
 
     virtualenv3 --no-site-packages env3
