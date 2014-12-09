@@ -224,10 +224,17 @@ def print_output(rows, delimiter, header):
                     return unicode(col)
             else:
                 return str(col)
-    if header:
-        print(delimiter.join(map(stringify, (col[0] for col in rows.description))))
-    for row in rows:
-        print(delimiter.join(map(stringify, row)))
+    try:
+        if header:
+            print(delimiter.join(map(stringify, (col[0] for col in rows.description))))
+        for row in rows:
+            print(delimiter.join(map(stringify, row)))
+    except IOError as e:
+        if e.errno == errno.EPIPE:
+            # ignore, happens when piping the output to things like `head`
+            pass
+        else:
+            raise
 
 
 if __name__ == '__main__':
