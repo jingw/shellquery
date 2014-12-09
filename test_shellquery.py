@@ -150,6 +150,17 @@ class TestShellQuery(unittest.TestCase):
         output = self._run_main_test(['*'], 'boring value')
         self.assertEqual(output, 'boring\tvalue\n')
 
+    def test_unicode_stdin(self):
+        """Test unicode on stdin, full stack"""
+        with open(os.path.join(os.path.dirname(__file__), 'test_data', '中 文')) as data:
+            output = subprocess.check_output(
+                [sys.executable, shellquery.__file__, 'c1'],
+                # In a terminal, Python infers the output encoding, but in a test it uses ASCII.
+                env={'PYTHONIOENCODING': 'utf-8'},
+                stdin=data,
+            )
+        self.assertEqual(output.decode('utf-8'), '中文\na\n')
+
     def test_header(self):
         """Test the --output-header option"""
         output = self._run_main_test(["'中' AS 文", '--output-header'], 'a')

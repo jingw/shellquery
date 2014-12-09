@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 from __future__ import absolute_import, print_function, unicode_literals
 import argparse
+import codecs
+import errno
 import io
 import logging
 import sqlite3
@@ -93,7 +95,10 @@ def load_file(connection, table_name, delimiter, fixed_string):
         rows = read_columns(file, delimiter, fixed_string)
         load_rows(connection, table_name, rows)
     if table_name == '-':
-        load(sys.stdin)
+        if sys.version_info[0] < 3:
+            load(codecs.getreader('utf-8')(sys.stdin))
+        else:
+            load(sys.stdin)
     else:
         with io.open(table_name) as f:
             load(f)
