@@ -79,6 +79,12 @@ def main():
                              "Defaults to whitespace.")
     parser.add_argument('-F', '--fixed-string', action='store_true', default=False,
                         help="Interpret delimiter as a fixed string instead of a regex")
+    parser.add_argument('-c', '--max-columns', type=int, default=100,
+                        help="Maximum number of columns to store. "
+                             "If splitting by the delimiter would produce too many columns, the "
+                             "final column will be the entire remainder of the string. "
+                             "Passing \"1\" lets you query on whole lines instead of columns. "
+                             "Note that SQLite bombs out after 999 columns.")
     parser.add_argument('--output-delimiter', default='\t',
                         help="String to use to separate columns. "
                              "Defaults to tab.")
@@ -86,13 +92,13 @@ def main():
                         help="Include a header row in the output")
     args = parser.parse_args()
 
-    results = execute_query(args.query, args.delimiter, args.fixed_string)
+    results = execute_query(args.query, args.delimiter, args.max_columns, args.fixed_string)
     print_output(results, args.output_delimiter, args.output_header)
 
 
-def load_file(connection, table_name, delimiter, fixed_string):
+def load_file(connection, table_name, delimiter, max_columns, fixed_string):
     def load(file):
-        rows = read_columns(file, delimiter, fixed_string)
+        rows = read_columns(file, delimiter, max_columns, fixed_string)
         load_rows(connection, table_name, rows)
     if table_name == '-':
         if sys.version_info[0] < 3:
@@ -104,14 +110,17 @@ def load_file(connection, table_name, delimiter, fixed_string):
             load(f)
 
 
-def read_columns(file, delimiter, fixed):
+def read_columns(file, delimiter, max_columns, fixed):
     """Yield the rows/columns in the given file as a list of lists"""
     col_regex = re.compile(re.escape(delimiter) if fixed else delimiter)
     for line in file:
         if line.endswith('\n'):
             line = line[:-1]
         if line:
-            yield col_regex.split(line)
+            if max_columns > 1:
+                yield col_regex.split(line, max_columns - 1)
+            else:
+                yield [line]
         else:
             yield []
 
@@ -178,7 +187,7 @@ def quote_identifier(name):
     raise ValueError("Unsupported identifier: {}".format(name))
 
 
-def execute_query(query, delimiter, fixed_string):
+def execute_query(query, delimiter, max_columns, fixed_string):
     processed_query = add_from_clause(add_select(query), '-')
     with tempfile.NamedTemporaryFile() as temp_file:
         connection = sqlite3.connect(temp_file.name)
@@ -203,7 +212,7 @@ def execute_query(query, delimiter, fixed_string):
                     # same message.
                     error = "Should have already loaded {}. You might need to quote the table name"
                     assert table_name not in loaded, error.format(table_name)
-                    load_file(connection, table_name, delimiter, fixed_string)
+                    load_file(connection, table_name, delimiter, max_columns, fixed_string)
                     loaded.add(table_name)
                 else:
                     _logger.error("Failed to execute: %s", processed_query)
