@@ -188,13 +188,9 @@ def execute_query(query, delimiter, fixed_string):
                 cursor.execute(processed_query)
             except sqlite3.OperationalError as e:
                 no_such_table = 'no such table: '
-                if sys.version_info[0] < 3:
-                    if isinstance(e.message, unicode):  # PyPy
-                        msg = e.message
-                    else:  # Normal python
-                        msg = e.message.decode('utf-8')
-                else:
-                    msg = str(e)
+                msg = e.args[0]
+                if sys.version_info[0] < 3 and isinstance(msg, str):
+                    msg = msg.decode('utf-8')
                 if msg.startswith(no_such_table):
                     table_name = msg[len(no_such_table):]
                     # SQLite treats "SELECT * FROM foo.log" as database foo, table log
