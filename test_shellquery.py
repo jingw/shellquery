@@ -22,22 +22,34 @@ class TestShellQuery(unittest.TestCase):
         lines = ['a 1\n', 'b . 3', 'c', '\n', '']
         rows = [['a', '1'], ['b', '.', '3'], ['c'], [], []]
         self.assertEqual(
-            list(shellquery.read_columns(lines, ' ', False)),
+            list(shellquery.read_columns(lines, ' ', 99, False)),
             rows
         )
         self.assertEqual(
-            list(shellquery.read_columns(lines, ' ', True)),
+            list(shellquery.read_columns(lines, ' ', 99, True)),
             rows
         )
         self.assertEqual(
-            list(shellquery.read_columns(lines, '.', False)),
+            list(shellquery.read_columns(lines, '.', 99, False)),
             [[''] * 4, [''] * 6, [''] * 2, [], []]
         )
         self.assertEqual(
-            list(shellquery.read_columns(lines, '.', True)),
+            list(shellquery.read_columns(lines, '.', 99, True)),
             [['a 1'], ['b ', ' 3'], ['c'], [], []]
         )
-        self.assertEqual(list(shellquery.read_columns([], ' ', True)), [])
+
+    def test_read_columns_empty(self):
+        self.assertEqual(list(shellquery.read_columns([], ' ', 99, True)), [])
+
+    def test_read_columns_max_columns(self):
+        self.assertEqual(
+            list(shellquery.read_columns(['a b c d'], ' ', 2, True)),
+            [['a', 'b c d']]
+        )
+        self.assertEqual(
+            list(shellquery.read_columns(['a b c d'], ' ', 1, True)),
+            [['a b c d']]
+        )
 
     def test_load_rows(self):
         connection = sqlite3.connect(':memory:')
