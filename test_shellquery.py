@@ -52,20 +52,29 @@ class TestShellQuery(unittest.TestCase):
         )
 
     def test_load_rows(self):
-        connection = sqlite3.connect(':memory:')
-        data = [[], [1], [1, 2], [0], [1, 2, 3, 4, 5], []]
+        def do_test():
+            connection = sqlite3.connect(':memory:')
+            data = [[], [1], [1, 2], [0], [2], [1, 2, 3, 4, 5], [], []]
 
-        shellquery.load_rows(connection, 'x', data)
-        cursor = connection.cursor()
-        cursor.execute('SELECT * FROM x')
-        self.assertCountEqual(cursor.fetchall(), [
-            (None,) * 5,
-            ('1',) + (None,) * 4,
-            ('1', '2') + (None,) * 3,
-            ('0',) + (None,) * 4,
-            ('1', '2', '3', '4', '5'),
-            (None,) * 5,
-        ])
+            shellquery.load_rows(connection, 'x', data)
+            cursor = connection.cursor()
+            cursor.execute('SELECT * FROM x')
+            self.assertCountEqual(cursor.fetchall(), [
+                (None,) * 5,
+                ('1',) + (None,) * 4,
+                ('1', '2') + (None,) * 3,
+                ('0',) + (None,) * 4,
+                ('2',) + (None,) * 4,
+                ('1', '2', '3', '4', '5'),
+                (None,) * 5,
+                (None,) * 5,
+            ])
+
+        do_test()
+        with mock.patch.object(shellquery, 'LOAD_ROWS_MAX_BUFFER', 1):
+            do_test()
+        with mock.patch.object(shellquery, 'LOAD_ROWS_MAX_BUFFER', 0):
+            do_test()
 
     def test_load_rows_ugly_name(self):
         connection = sqlite3.connect(':memory:')

@@ -66,6 +66,8 @@ Note that SQLite is case insensitive, but ShellQuery expects cases to match on p
 sensitive file names.
 """
 
+LOAD_ROWS_MAX_BUFFER = 1000
+
 
 def main():
     logging.basicConfig()
@@ -132,20 +134,33 @@ def load_rows(connection, table, data):
     create_table_stmt = 'CREATE TABLE {} ({})'.format(
         quote_identifier(table), col_fmt.format(1))
     connection.execute(create_table_stmt)
+
+    current_rows = []
+
+    def flush():
+        placeholders = ','.join('?' * cur_width)
+        insert_query = 'INSERT INTO {} VALUES ({})'.format(
+            quote_identifier(table), placeholders)
+        connection.executemany(insert_query, current_rows)
+        del current_rows[:]
+
     for row in data:
         # Expand table if needed
         while len(row) > cur_width:
+            if current_rows:
+                flush()
             # sqlite alter table takes constant time, regardless of data already in the table
             # https://www.sqlite.org/lang_altertable.html
             alter_table_statement = 'ALTER TABLE {} ADD COLUMN {}'.format(
                 quote_identifier(table), col_fmt.format(cur_width + 1))
             connection.execute(alter_table_statement)
             cur_width += 1
-        placeholders = ','.join('?' * cur_width)
-        insert_query = 'INSERT INTO {} VALUES ({})'.format(
-            quote_identifier(table), placeholders)
+
         padded_row = row + [None] * (cur_width - len(row))
-        connection.execute(insert_query, padded_row)
+        current_rows.append(padded_row)
+        if len(current_rows) >= LOAD_ROWS_MAX_BUFFER:
+            flush()
+    flush()
 
 
 def add_from_clause(query, table):
