@@ -12,7 +12,7 @@ import os.path
 import re
 import tempfile
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 _logger = logging.getLogger(__name__)
 
 EXAMPLES = [
