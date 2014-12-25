@@ -5,11 +5,10 @@ import codecs
 import errno
 import io
 import logging
-import sqlite3
-import sys
-
 import os.path
 import re
+import sqlite3
+import sys
 import tempfile
 
 __version__ = '0.1.1'
@@ -112,6 +111,28 @@ def load_file(connection, table_name, delimiter, max_columns, fixed_string):
             load(f)
 
 
+def re_split(regex, string, maxsplit):
+    """Same as regex.split(string, maxsplit), but does not include the text in capturing groups.
+
+    https://docs.python.org/3/library/re.html#re.split
+    """
+    assert maxsplit > 0
+    parts = []
+    cur = 0
+    for match in regex.finditer(string):
+        start, end = match.span()
+        if start == end:
+            # re.split never splits on an empty match
+            continue
+        parts.append(string[cur:start])
+        cur = end
+        if len(parts) >= maxsplit:
+            break
+    assert cur <= len(string)
+    parts.append(string[cur:])  # can be empty if string is empty or there's a match at the end
+    return parts
+
+
 def read_columns(file, delimiter, max_columns, fixed):
     """Yield the rows/columns in the given file as a list of lists"""
     col_regex = re.compile(re.escape(delimiter) if fixed else delimiter)
@@ -120,7 +141,7 @@ def read_columns(file, delimiter, max_columns, fixed):
             line = line[:-1]
         if line:
             if max_columns > 1:
-                yield col_regex.split(line, max_columns - 1)
+                yield re_split(col_regex, line, max_columns - 1)
             else:
                 yield [line]
         else:

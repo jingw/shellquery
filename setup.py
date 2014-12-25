@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 
-from setuptools import setup
-from setuptools.command.test import test as TestCommand
 import re
 import sys
+
+from setuptools import setup
+from setuptools.command.test import test as TestCommand
 
 
 class PyTest(TestCommand):
