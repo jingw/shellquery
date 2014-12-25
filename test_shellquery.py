@@ -1,11 +1,14 @@
 # coding: utf-8
 from __future__ import absolute_import, print_function, unicode_literals
-import unittest
-import sqlite3
-import subprocess
-import sys
 import io
 import os.path
+import random
+import re
+import sqlite3
+import sre_constants
+import subprocess
+import sys
+import unittest
 
 import mock
 
@@ -36,6 +39,12 @@ class TestShellQuery(unittest.TestCase):
         self.assertEqual(
             list(shellquery.read_columns(lines, '.', 99, True)),
             [['a 1'], ['b ', ' 3'], ['c'], [], []]
+        )
+
+    def test_read_columns_capturing_group(self):
+        self.assertEqual(
+            list(shellquery.read_columns(['_ab_ab_'], '(a|b)+', 99, False)),
+            [['_', '_', '_']],
         )
 
     def test_read_columns_empty(self):
@@ -232,3 +241,48 @@ class TestShellQuery(unittest.TestCase):
                 cwd=os.path.join(os.path.dirname(__file__), 'test_data'),
             )
             self.assertEqual(output.decode('utf-8'), expected)
+
+    def test_re_split_randomly(self):
+        """Test re_split against re.split by generating random test cases"""
+
+        def random_string(choices, maxlength):
+            length = random.randint(0, maxlength)
+            return ''.join(random.choice(choices) for _ in range(length))
+
+        string_choices = 'ab'
+        re_choices = 'ab|?*+()'
+        for _ in range(10 * 1000):
+            string = random_string(string_choices, 10)
+            try:
+                # Replace '(' to get a non-capturing group
+                regex = re.compile(random_string(re_choices, 10).replace('(', '(?:'))
+            except sre_constants.error:
+                # ignore malformed regexes
+                continue
+            maxsplit = random.randint(1, 10)
+            self.assertEqual(
+                regex.split(string, maxsplit),
+                shellquery.re_split(regex, string, maxsplit),
+                "string={}, regex={}, maxsplit={}".format(string, regex, maxsplit)
+            )
+
+    def test_re_split(self):
+        test_cases = [
+            ('', '', 1),
+            ('a', 'a', 1),
+            ('a', '', 1),
+            ('aaa', 'a', 1),
+            ('aaa', '', 1),
+            ('aaa', 'a', 9),
+            ('aaa', '', 9),
+            ('aaa', 'a*', 9),
+            ('aaa', 'a+', 9),
+            ('abcabc', 'a|b', 9),
+            ('abcabc', '(?:a|b)', 9),
+        ]
+        for string, regex, maxsplit in test_cases:
+            compiled = re.compile(regex)
+            self.assertEqual(
+                compiled.split(string, maxsplit),
+                shellquery.re_split(compiled, string, maxsplit)
+            )
