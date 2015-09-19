@@ -61,6 +61,9 @@ Development testing
 .. image:: https://travis-ci.org/jingw/shellquery.svg?branch=master
     :target: https://travis-ci.org/jingw/shellquery
 
+.. image:: http://codecov.io/github/jingw/shellquery/coverage.svg?branch=master
+    :target: http://codecov.io/github/jingw/shellquery?branch=master
+
 Python 3::
 
     virtualenv3 --no-site-packages env3
