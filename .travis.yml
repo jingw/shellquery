@@ -1,3 +1,4 @@
+sudo: false
 language: python
 python:
   - "2.7"
@@ -6,5 +7,7 @@ python:
   - "3.4"
   - "pypy"
   - "pypy3"
-install: "pip install -r dev_requirements.txt"
+before_install: pip install codecov
+install: pip install -r dev_requirements.txt
 script: py.test
+after_success: codecov
