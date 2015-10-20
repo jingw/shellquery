@@ -2,7 +2,7 @@
 ShellQuery
 ==========
 
-Ever piped together some awful combination of ``grep``, ``sed``, ``awk``, ``sort`` to run a quick-and-dirty analysis? Now you can do those same awful transformations using SQL! Many studies `[weasel words] <https://en.wikipedia.org/wiki/Wikipedia:Manual_of_Style/Words_to_watch#Unsupported_attributions>`_ have shown that the aforementioned tools are difficult to use, and moreover, most people prefer SQL `[citation needed] <https://en.wikipedia.org/wiki/Wikipedia:Citation_needed>`_.
+Ever piped together some awful combination of ``grep``, ``sed``, ``awk``, ``sort`` to run a quick-and-dirty analysis? Now you can do those same awful transformations using SQL! Many studies |weaselwords|_ have shown that the aforementioned tools are difficult to use, and moreover, most people prefer SQL |citationneeded|_.
 
 ShellQuery (``shq``) is a command line tool for running SQL against plain text. It lets you express logic in SQL instead of stringing together bash commands.
 
@@ -77,3 +77,9 @@ And again for Python 2 (after ``deactivate``)::
     source env2/bin/activate
     pip2 install -r dev_requirements.txt
     py.test
+
+.. |weaselwords| replace:: :sup:`[weasel words]`
+.. _weaselwords: https://en.wikipedia.org/wiki/Wikipedia:Manual_of_Style/Words_to_watch#Unsupported_attributions
+
+.. |citationneeded| replace:: :sup:`[citation needed]`
+.. _citationneeded: https://en.wikipedia.org/wiki/Wikipedia:Citation_needed
