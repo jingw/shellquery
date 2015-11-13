@@ -264,21 +264,24 @@ class TestShellQuery(unittest.TestCase):
                 # ignore malformed regexes
                 continue
             maxsplit = random.randint(1, 10)
+            try:
+                split_result = regex.split(string, maxsplit)
+            except ValueError as e:
+                # Python 3.5 introduced a backwards incompatible change to fail hard on patterns
+                # that can match empty strings
+                self.assertEqual(e.args[0], 'split() requires a non-empty pattern match.')
+                continue
             self.assertEqual(
-                regex.split(string, maxsplit),
+                split_result,
                 shellquery.re_split(regex, string, maxsplit),
                 "string={}, regex={}, maxsplit={}".format(string, regex, maxsplit)
             )
 
     def test_re_split(self):
         test_cases = [
-            ('', '', 1),
             ('a', 'a', 1),
-            ('a', '', 1),
             ('aaa', 'a', 1),
-            ('aaa', '', 1),
             ('aaa', 'a', 9),
-            ('aaa', '', 9),
             ('aaa', 'a*', 9),
             ('aaa', 'a+', 9),
             ('abcabc', 'a|b', 9),
@@ -290,3 +293,7 @@ class TestShellQuery(unittest.TestCase):
                 compiled.split(string, maxsplit),
                 shellquery.re_split(compiled, string, maxsplit)
             )
+        self.assertEqual([''], shellquery.re_split(re.compile(''), '', 1))
+        self.assertEqual(['a'], shellquery.re_split(re.compile(''), 'a', 1))
+        self.assertEqual(['aaa'], shellquery.re_split(re.compile(''), 'aaa', 1))
+        self.assertEqual(['aaa'], shellquery.re_split(re.compile(''), 'aaa', 9))
