@@ -146,6 +146,10 @@ class TestShellQuery(unittest.TestCase):
             shellquery.add_select(' select x from a'),
             ' select x from a'
         )
+        self.assertEqual(
+            shellquery.add_select('with tbl(col) as (select * from a) select * from tbl'),
+            'with tbl(col) as (select * from a) select * from tbl'
+        )
 
     def _run_main_test(self, args, stdin=None):
         """Return the output of running main against the given arguments and standard input"""
