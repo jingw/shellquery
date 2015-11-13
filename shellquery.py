@@ -205,9 +205,9 @@ def add_from_clause(query, table):
 
 
 def add_select(query):
-    """If the query doesn't start with SELECT, add it."""
+    """If the query doesn't start with SELECT or WITH, add it."""
     # Note: doesn't work if there are comments in the beginning of the query
-    if re.match(r'\s*SELECT\b', query, re.I):
+    if re.match(r'\s*(SELECT|WITH)\b', query, re.I):
         return query
     else:
         return 'SELECT ' + query
