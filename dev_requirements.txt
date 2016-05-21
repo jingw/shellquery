@@ -1,4 +1,5 @@
 mock
-pytest
+pytest>=2.9
 pytest-cov
+pytest-flake8
 pytest-random
