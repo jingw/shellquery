@@ -27,7 +27,7 @@ EXAMPLES = [
     ),
     (
         'Joining files with stdin (suppose web.log has userid,path and users has userid,name)',
-        """cat web.log | {name} 'SELECT "-".c2, users.c2 FROM "-" JOIN users ON "-".c1 = users.c1'""",
+        """cat web.log | {name} 'SELECT "-".c2, users.c2 FROM "-" JOIN users ON "-".c1 = users.c1'""",  # noqa
         "/some/path\talice\n/foo/bar\tbob\n/blah/blah\tbob\n"
     ),
 ]
@@ -267,7 +267,7 @@ def print_output(rows, delimiter, header):
                 if isinstance(col, str):
                     return col.decode('utf-8')
                 else:
-                    return unicode(col)
+                    return unicode(col)  # noqa
             else:
                 return str(col)
     try:
