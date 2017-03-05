@@ -1,10 +1,12 @@
 sudo: false
 language: python
 python:
+  # https://docs.python.org/devguide/#status-of-python-branches
   - "2.7"
   - "3.3"
   - "3.4"
   - "3.5"
+  - "3.6"
   - "pypy"
   - "pypy3"
 before_install: pip install codecov
