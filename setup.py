@@ -19,6 +19,7 @@ class PyTest(TestCommand):
         errno = pytest.main(self.test_args)
         sys.exit(errno)
 
+
 with open('README.rst') as readme:
     long_description = readme.read()
 with open('shellquery.py') as py:
