@@ -239,7 +239,8 @@ def execute_query(query, delimiter, max_columns, fixed_string):
             except sqlite3.OperationalError as e:
                 no_such_table = 'no such table: '
                 msg = e.args[0]
-                if sys.version_info[0] < 3 and isinstance(msg, str):
+                if isinstance(msg, bytes):
+                    assert sys.version_info[0] < 3
                     msg = msg.decode('utf-8')
                 if msg.startswith(no_such_table):
                     table_name = msg[len(no_such_table):]
@@ -264,7 +265,7 @@ def print_output(rows, delimiter, header):
             return 'NULL'
         else:
             if sys.version_info[0] < 3:
-                if isinstance(col, str):
+                if isinstance(col, bytes):
                     return col.decode('utf-8')
                 else:
                     return unicode(col)  # noqa
