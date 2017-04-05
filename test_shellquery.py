@@ -23,6 +23,8 @@ if sys.version_info[0] < 3:
 
 
 class TestShellQuery(unittest.TestCase):
+    
+    
     def test_read_columns(self):
         lines = ['a 1\n', 'b . 3', 'c', '\n', '']
         rows = [['a', '1'], ['b', '.', '3'], ['c'], [], []]
