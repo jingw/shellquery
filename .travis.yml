@@ -11,5 +11,5 @@ python:
   - "pypy3"
 before_install: pip install codecov
 install: pip install -r dev_requirements.txt
-script: py.test
+script: PYTHONHASHSEED=random pytest
 after_success: codecov

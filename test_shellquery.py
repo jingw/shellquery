@@ -1,5 +1,6 @@
 # coding: utf-8
 from __future__ import absolute_import, print_function, unicode_literals
+
 import io
 import os.path
 import random
@@ -11,9 +12,9 @@ import sys
 import unittest
 
 import mock
+import pytest
 
 import shellquery
-
 
 if sys.version_info[0] < 3:
     # monkey patch for python 2 compatibility
@@ -246,6 +247,7 @@ class TestShellQuery(unittest.TestCase):
             )
             self.assertEqual(output.decode('utf-8'), expected)
 
+    @pytest.mark.filterwarnings('ignore:split() requires a non-empty pattern match.:FutureWarning')
     def test_re_split_randomly(self):
         """Test re_split against re.split by generating random test cases"""
 
@@ -277,6 +279,7 @@ class TestShellQuery(unittest.TestCase):
                 "string={}, regex={}, maxsplit={}".format(string, regex, maxsplit)
             )
 
+    @pytest.mark.filterwarnings('ignore:split() requires a non-empty pattern match.:FutureWarning')
     def test_re_split(self):
         test_cases = [
             ('a', 'a', 1),
