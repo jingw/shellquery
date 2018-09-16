@@ -12,13 +12,13 @@ import sys
 import unittest
 
 import mock
-import pytest
 
 import shellquery
 
 if sys.version_info[0] < 3:
     # monkey patch for python 2 compatibility
     unittest.TestCase.assertCountEqual = unittest.TestCase.assertItemsEqual
+    unittest.TestCase.assertRaisesRegex = unittest.TestCase.assertRaisesRegexp
 
 
 class TestShellQuery(unittest.TestCase):
@@ -247,7 +247,6 @@ class TestShellQuery(unittest.TestCase):
             )
             self.assertEqual(output.decode('utf-8'), expected)
 
-    @pytest.mark.filterwarnings('ignore:split() requires a non-empty pattern match.:FutureWarning')
     def test_re_split_randomly(self):
         """Test re_split against re.split by generating random test cases"""
 
@@ -265,27 +264,22 @@ class TestShellQuery(unittest.TestCase):
             except sre_constants.error:
                 # ignore malformed regexes
                 continue
-            maxsplit = random.randint(1, 10)
-            try:
-                split_result = regex.split(string, maxsplit)
-            except ValueError as e:
-                # Python 3.5 introduced a backwards incompatible change to fail hard on patterns
-                # that can match empty strings
-                self.assertEqual(e.args[0], 'split() requires a non-empty pattern match.')
+            if regex.match(''):
+                # ignore regexes matching empty string
                 continue
+            maxsplit = random.randint(1, 10)
+            split_result = regex.split(string, maxsplit)
             self.assertEqual(
                 split_result,
                 shellquery.re_split(regex, string, maxsplit),
                 "string={}, regex={}, maxsplit={}".format(string, regex, maxsplit)
             )
 
-    @pytest.mark.filterwarnings('ignore:split() requires a non-empty pattern match.:FutureWarning')
     def test_re_split(self):
         test_cases = [
             ('a', 'a', 1),
             ('aaa', 'a', 1),
             ('aaa', 'a', 9),
-            ('aaa', 'a*', 9),
             ('aaa', 'a+', 9),
             ('abcabc', 'a|b', 9),
             ('abcabc', '(?:a|b)', 9),
@@ -296,7 +290,9 @@ class TestShellQuery(unittest.TestCase):
                 compiled.split(string, maxsplit),
                 shellquery.re_split(compiled, string, maxsplit)
             )
-        self.assertEqual([''], shellquery.re_split(re.compile(''), '', 1))
-        self.assertEqual(['a'], shellquery.re_split(re.compile(''), 'a', 1))
-        self.assertEqual(['aaa'], shellquery.re_split(re.compile(''), 'aaa', 1))
-        self.assertEqual(['aaa'], shellquery.re_split(re.compile(''), 'aaa', 9))
+
+    def test_re_split_empty(self):
+        self.assertRaisesRegex(
+            ValueError, "empty string",
+            lambda: shellquery.re_split(re.compile(''), 'data', 1)
+        )

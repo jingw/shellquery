@@ -116,14 +116,14 @@ def re_split(regex, string, maxsplit):
 
     https://docs.python.org/3/library/re.html#re.split
     """
+    if regex.match(''):
+        raise ValueError("Delimiter matching empty string not supported")
     assert maxsplit > 0
     parts = []
     cur = 0
     for match in regex.finditer(string):
         start, end = match.span()
-        if start == end:
-            # re.split never splits on an empty match
-            continue
+        assert start < end
         parts.append(string[cur:start])
         cur = end
         if len(parts) >= maxsplit:
