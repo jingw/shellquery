@@ -11,7 +11,7 @@ import sqlite3
 import sys
 import tempfile
 
-__version__ = '0.1.3'
+__version__ = '0.1.4'
 _logger = logging.getLogger(__name__)
 
 EXAMPLES = [
