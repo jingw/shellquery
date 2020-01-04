@@ -17,41 +17,28 @@ class TestShellQuery(unittest.TestCase):
     def test_read_columns(self):
         lines = ['a 1\n', 'b . 3', 'c', '\n', '']
         rows = [['a', '1'], ['b', '.', '3'], ['c'], [], []]
-        self.assertEqual(
-            list(shellquery.read_columns(lines, ' ', 99, False)),
-            rows
+        assert list(shellquery.read_columns(lines, ' ', 99, False)) == rows
+        assert list(shellquery.read_columns(lines, ' ', 99, True)) == rows
+        assert (
+                list(shellquery.read_columns(lines, '.', 99, False))
+                ==
+                [[''] * 4, [''] * 6, [''] * 2, [], []]
         )
-        self.assertEqual(
-            list(shellquery.read_columns(lines, ' ', 99, True)),
-            rows
-        )
-        self.assertEqual(
-            list(shellquery.read_columns(lines, '.', 99, False)),
-            [[''] * 4, [''] * 6, [''] * 2, [], []]
-        )
-        self.assertEqual(
-            list(shellquery.read_columns(lines, '.', 99, True)),
-            [['a 1'], ['b ', ' 3'], ['c'], [], []]
+        assert (
+                list(shellquery.read_columns(lines, '.', 99, True))
+                ==
+                [['a 1'], ['b ', ' 3'], ['c'], [], []]
         )
 
     def test_read_columns_capturing_group(self):
-        self.assertEqual(
-            list(shellquery.read_columns(['_ab_ab_'], '(a|b)+', 99, False)),
-            [['_', '_', '_']],
-        )
+        assert list(shellquery.read_columns(['_ab_ab_'], '(a|b)+', 99, False)) == [['_', '_', '_']]
 
     def test_read_columns_empty(self):
-        self.assertEqual(list(shellquery.read_columns([], ' ', 99, True)), [])
+        assert list(shellquery.read_columns([], ' ', 99, True)) == []
 
     def test_read_columns_max_columns(self):
-        self.assertEqual(
-            list(shellquery.read_columns(['a b c d'], ' ', 2, True)),
-            [['a', 'b c d']]
-        )
-        self.assertEqual(
-            list(shellquery.read_columns(['a b c d'], ' ', 1, True)),
-            [['a b c d']]
-        )
+        assert list(shellquery.read_columns(['a b c d'], ' ', 2, True)) == [['a', 'b c d']]
+        assert list(shellquery.read_columns(['a b c d'], ' ', 1, True)) == [['a b c d']]
 
     def test_load_rows(self):
         def do_test():
@@ -60,17 +47,17 @@ class TestShellQuery(unittest.TestCase):
 
             shellquery.load_rows(connection, 'x', data)
             cursor = connection.cursor()
-            cursor.execute('SELECT * FROM x')
-            self.assertCountEqual(cursor.fetchall(), [
+            cursor.execute('SELECT * FROM x ORDER BY c1, c2, c3, c4, c5')
+            assert cursor.fetchall() == [
                 (None,) * 5,
+                (None,) * 5,
+                (None,) * 5,
+                ('0',) + (None,) * 4,
                 ('1',) + (None,) * 4,
                 ('1', '2') + (None,) * 3,
-                ('0',) + (None,) * 4,
-                ('2',) + (None,) * 4,
                 ('1', '2', '3', '4', '5'),
-                (None,) * 5,
-                (None,) * 5,
-            ])
+                ('2',) + (None,) * 4,
+            ]
 
         do_test()
         with mock.patch.object(shellquery, 'LOAD_ROWS_MAX_BUFFER', 1):
@@ -87,61 +74,46 @@ class TestShellQuery(unittest.TestCase):
         shellquery.load_rows(connection, table_name, data)
         cursor = connection.cursor()
         cursor.execute('SELECT * FROM {}'.format(shellquery.quote_identifier(table_name)))
-        self.assertFalse(cursor.fetchall())
+        assert not cursor.fetchall()
 
     def test_load_rows_empty(self):
         connection = sqlite3.connect(':memory:')
         shellquery.load_rows(connection, 'x', [])
         cursor = connection.cursor()
         cursor.execute('SELECT * FROM x')
-        self.assertEqual(cursor.fetchall(), [])
+        assert cursor.fetchall() == []
 
     def test_quote_identifier(self):
-        self.assertEqual(shellquery.quote_identifier('foo'), '"foo"')
-        self.assertEqual(shellquery.quote_identifier('`]'), '"`]"')
-        self.assertEqual(shellquery.quote_identifier('`"'), '[`"]')
-        self.assertEqual(shellquery.quote_identifier('"]'), '`"]`')
-        self.assertEqual(shellquery.quote_identifier('"`['), '["`[]')
-        self.assertRaises(ValueError, lambda: shellquery.quote_identifier('"`]'))
+        assert shellquery.quote_identifier('foo') == '"foo"'
+        assert shellquery.quote_identifier('`]') == '"`]"'
+        assert shellquery.quote_identifier('`"') == '[`"]'
+        assert shellquery.quote_identifier('"]') == '`"]`'
+        assert shellquery.quote_identifier('"`[') == '["`[]'
+        with self.assertRaises(ValueError):
+            shellquery.quote_identifier('"`]')
 
     def test_add_from_clause(self):
-        self.assertEqual(
-            shellquery.add_from_clause('c1', 'table'),
-            'c1 FROM "table" '
+        assert shellquery.add_from_clause('c1', 'table') == 'c1 FROM "table" '
+        assert shellquery.add_from_clause('c1 from x', 'table') == 'c1 from x'
+        assert shellquery.add_from_clause('c1 where true', 'table') == 'c1 FROM "table" where true'
+        assert (
+                shellquery.add_from_clause('c1 where true group by c1 order by c1', 'table')
+                == 'c1 FROM "table" where true group by c1 order by c1'
         )
-        self.assertEqual(
-            shellquery.add_from_clause('c1 from x', 'table'),
-            'c1 from x'
+        assert (
+                shellquery.add_from_clause('[group] order by c1', 'table')
+                ==
+                '[group] FROM "table" order by c1'
         )
-        self.assertEqual(
-            shellquery.add_from_clause('c1 where true', 'table'),
-            'c1 FROM "table" where true'
-        )
-        self.assertEqual(
-            shellquery.add_from_clause('c1 where true group by c1 order by c1', 'table'),
-            'c1 FROM "table" where true group by c1 order by c1'
-        )
-        self.assertEqual(
-            shellquery.add_from_clause('[group] order by c1', 'table'),
-            '[group] FROM "table" order by c1'
-        )
-        self.assertEqual(
-            shellquery.add_from_clause('c1 limit 1', 'table'),
-            'c1 FROM "table" limit 1'
-        )
+        assert shellquery.add_from_clause('c1 limit 1', 'table') == 'c1 FROM "table" limit 1'
 
     def test_add_select(self):
-        self.assertEqual(
-            shellquery.add_select('x from a'),
-            'SELECT x from a'
-        )
-        self.assertEqual(
-            shellquery.add_select(' select x from a'),
-            ' select x from a'
-        )
-        self.assertEqual(
-            shellquery.add_select('with tbl(col) as (select * from a) select * from tbl'),
-            'with tbl(col) as (select * from a) select * from tbl'
+        assert shellquery.add_select('x from a') == 'SELECT x from a'
+        assert shellquery.add_select(' select x from a') == ' select x from a'
+        assert (
+                shellquery.add_select('with tbl(col) as (select * from a) select * from tbl')
+                ==
+                'with tbl(col) as (select * from a) select * from tbl'
         )
 
     def _run_main_test(self, args, stdin=None):
@@ -167,15 +139,16 @@ class TestShellQuery(unittest.TestCase):
             output = self._run_main_test([query])
         finally:
             os.chdir(cwd)
-        self.assertCountEqual(
-            output.splitlines(),
-            ['中文\t1', 'a\t2', 'This\tfile', 'screw\tyou', '0\tNULL']
+        assert (
+                sorted(output.splitlines())
+                ==
+                ['0\tNULL', 'This\tfile', 'a\t2', 'screw\tyou', '中文\t1']
         )
 
     def test_stdin(self):
         """Test reading from stdin"""
         output = self._run_main_test(['*'], 'boring value')
-        self.assertEqual(output, 'boring\tvalue\n')
+        assert output == 'boring\tvalue\n'
 
     def test_unicode_stdin(self):
         """Test unicode on stdin, full stack"""
@@ -186,16 +159,16 @@ class TestShellQuery(unittest.TestCase):
                 env={'PYTHONIOENCODING': 'utf-8'},
                 stdin=data,
             )
-        self.assertEqual(output.decode(), '中文\na\n')
+        assert output.decode() == '中文\na\n'
 
     def test_header(self):
         """Test the --output-header option"""
         output = self._run_main_test(["'中' AS 文", '--output-header'], 'a')
-        self.assertEqual(output.splitlines(), ['文', '中'])
+        assert output.splitlines() == ['文', '中']
 
         # No rows to putput
         output = self._run_main_test(["9 as colname", '-H'])
-        self.assertEqual(output.splitlines(), ['colname'])
+        assert output.splitlines() == ['colname']
 
     def test_examples(self):
         """Verify the examples in the argparse help text"""
@@ -207,7 +180,7 @@ class TestShellQuery(unittest.TestCase):
                 shell=True,
                 cwd=os.path.join(os.path.dirname(__file__), 'test_data'),
             )
-            self.assertEqual(output.decode(), expected)
+            assert output.decode() == expected
 
     def test_readme(self):
         """Verify the examples in the README"""
@@ -237,7 +210,7 @@ class TestShellQuery(unittest.TestCase):
                 shell=True,
                 cwd=os.path.join(os.path.dirname(__file__), 'test_data'),
             )
-            self.assertEqual(output.decode(), expected)
+            assert output.decode() == expected
 
     def test_re_split_randomly(self):
         """Test re_split against re.split by generating random test cases"""
@@ -261,11 +234,11 @@ class TestShellQuery(unittest.TestCase):
                 continue
             maxsplit = random.randint(1, 10)
             split_result = regex.split(string, maxsplit)
-            self.assertEqual(
-                split_result,
-                shellquery.re_split(regex, string, maxsplit),
-                "string={}, regex={}, maxsplit={}".format(string, regex, maxsplit)
-            )
+            assert (
+                    split_result
+                    ==
+                    shellquery.re_split(regex, string, maxsplit)
+            ), "string={}, regex={}, maxsplit={}".format(string, regex, maxsplit)
 
     def test_re_split(self):
         test_cases = [
@@ -278,13 +251,12 @@ class TestShellQuery(unittest.TestCase):
         ]
         for string, regex, maxsplit in test_cases:
             compiled = re.compile(regex)
-            self.assertEqual(
-                compiled.split(string, maxsplit),
-                shellquery.re_split(compiled, string, maxsplit)
+            assert (
+                    compiled.split(string, maxsplit)
+                    ==
+                    shellquery.re_split(compiled, string, maxsplit)
             )
 
     def test_re_split_empty(self):
-        self.assertRaisesRegex(
-            ValueError, "empty string",
-            lambda: shellquery.re_split(re.compile(''), 'data', 1)
-        )
+        with self.assertRaisesRegex(ValueError, "empty string"):
+            shellquery.re_split(re.compile(''), 'data', 1)
