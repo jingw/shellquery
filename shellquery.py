@@ -9,6 +9,19 @@ import sys
 import tempfile
 
 __version__ = '0.1.4'
+
+from sqlite3 import Cursor
+from sqlite3 import Connection
+
+from typing import IO
+from typing import Iterator
+from typing import List
+from typing import Pattern
+from typing import Optional
+from typing import Set
+from typing import Iterable
+from typing import Sequence
+
 _logger = logging.getLogger(__name__)
 
 EXAMPLES = [
@@ -30,7 +43,7 @@ EXAMPLES = [
 ]
 
 
-def format_examples():
+def format_examples() -> str:
     lines = []
     for name, cmd, result in EXAMPLES:
         lines.append('  ' + name + ':')
@@ -65,7 +78,7 @@ sensitive file names.
 LOAD_ROWS_MAX_BUFFER = 1000
 
 
-def main():
+def main() -> None:
     logging.basicConfig()
     parser = argparse.ArgumentParser(
         description=HELP_TEXT,
@@ -94,10 +107,16 @@ def main():
     print_output(results, args.output_delimiter, args.output_header)
 
 
-def load_file(connection, table_name, delimiter, max_columns, fixed_string):
-    def load(file):
+def load_file(connection: Connection,
+              table_name: str,
+              delimiter: str,
+              max_columns: int,
+              fixed_string: bool,
+              ) -> None:
+    def load(file: IO[str]) -> None:
         rows = read_columns(file, delimiter, max_columns, fixed_string)
         load_rows(connection, table_name, rows)
+
     if table_name == '-':
         load(sys.stdin)
     else:
@@ -105,7 +124,7 @@ def load_file(connection, table_name, delimiter, max_columns, fixed_string):
             load(f)
 
 
-def re_split(regex, string, maxsplit):
+def re_split(regex: Pattern[str], string: str, maxsplit: int) -> List[str]:
     """Same as regex.split(string, maxsplit), but does not include the text in capturing groups.
 
     https://docs.python.org/3/library/re.html#re.split
@@ -127,7 +146,11 @@ def re_split(regex, string, maxsplit):
     return parts
 
 
-def read_columns(file, delimiter, max_columns, fixed):
+def read_columns(file: Iterable[str],
+                 delimiter: str,
+                 max_columns: int,
+                 fixed: bool,
+                 ) -> Iterator[List[str]]:
     """Yield the rows/columns in the given file as a list of lists"""
     col_regex = re.compile(re.escape(delimiter) if fixed else delimiter)
     for line in file:
@@ -142,7 +165,7 @@ def read_columns(file, delimiter, max_columns, fixed):
             yield []
 
 
-def load_rows(connection, table, data):
+def load_rows(connection: Connection, table: str, data: Iterable[Sequence[object]]) -> None:
     """Create `table` from the given iterable of rows `data`"""
     cur_width = 1
     col_fmt = 'c{} TEXT'
@@ -150,9 +173,9 @@ def load_rows(connection, table, data):
         quote_identifier(table), col_fmt.format(1))
     connection.execute(create_table_stmt)
 
-    current_rows = []
+    current_rows: List[List[object]] = []
 
-    def flush():
+    def flush() -> None:
         placeholders = ','.join('?' * cur_width)
         insert_query = 'INSERT INTO {} VALUES ({})'.format(
             quote_identifier(table), placeholders)
@@ -171,14 +194,14 @@ def load_rows(connection, table, data):
             connection.execute(alter_table_statement)
             cur_width += 1
 
-        padded_row = row + [None] * (cur_width - len(row))
+        padded_row = list(row) + [None] * (cur_width - len(row))
         current_rows.append(padded_row)
         if len(current_rows) >= LOAD_ROWS_MAX_BUFFER:
             flush()
     flush()
 
 
-def add_from_clause(query, table):
+def add_from_clause(query: str, table: str) -> str:
     """If the query doesn't have a FROM clause, add it using the given table."""
     # Note: doesn't work when query has FROM, GROUP BY, or ORDER BY as a non-keyword
     if re.search(r'\bFROM\b', query, re.I):
@@ -198,7 +221,7 @@ def add_from_clause(query, table):
         return query + ' ' + clause
 
 
-def add_select(query):
+def add_select(query: str) -> str:
     """If the query doesn't start with SELECT or WITH, add it."""
     # Note: doesn't work if there are comments in the beginning of the query
     if re.match(r'\s*(SELECT|WITH)\b', query, re.I):
@@ -207,7 +230,7 @@ def add_select(query):
         return 'SELECT ' + query
 
 
-def quote_identifier(name):
+def quote_identifier(name: str) -> str:
     if '"' not in name:
         return '"' + name + '"'
     if '`' not in name:
@@ -217,22 +240,22 @@ def quote_identifier(name):
     raise ValueError("Unsupported identifier: {}".format(name))
 
 
-def execute_query(query, delimiter, max_columns, fixed_string):
+def execute_query(query: str, delimiter: str, max_columns: int, fixed_string: bool) -> Cursor:
     processed_query = add_from_clause(add_select(query), '-')
     with tempfile.NamedTemporaryFile() as temp_file:
         connection = sqlite3.connect(temp_file.name)
         # Let SQLite tell me what tables I need to load by repeatedly running the query.
         # This is really hacky but it's more robust than trying to regex parse the query.
         # e.g. this correctly handles aliasing
-        results = None
-        loaded = set()
+        results: Optional[Cursor] = None
+        loaded: Set[str] = set()
         while results is None:
             cursor = connection.cursor()
             try:
                 cursor.execute(processed_query)
             except sqlite3.OperationalError as e:
                 no_such_table = 'no such table: '
-                msg = e.args[0]
+                msg: str = e.args[0]
                 if msg.startswith(no_such_table):
                     table_name = msg[len(no_such_table):]
                     # SQLite treats "SELECT * FROM foo.log" as database foo, table log
@@ -250,12 +273,13 @@ def execute_query(query, delimiter, max_columns, fixed_string):
         return results
 
 
-def print_output(rows, delimiter, header):
-    def stringify(col):
+def print_output(rows: Cursor, delimiter: str, header: bool) -> None:
+    def stringify(col: object) -> str:
         if col is None:
             return 'NULL'
         else:
             return str(col)
+
     try:
         if header:
             print(delimiter.join(map(stringify, (col[0] for col in rows.description))))

@@ -8,13 +8,14 @@ import sre_constants
 import subprocess
 import sys
 import unittest
+from typing import List
 from unittest import mock
 
 import shellquery
 
 
 class TestShellQuery(unittest.TestCase):
-    def test_read_columns(self):
+    def test_read_columns(self) -> None:
         lines = ['a 1\n', 'b . 3', 'c', '\n', '']
         rows = [['a', '1'], ['b', '.', '3'], ['c'], [], []]
         assert list(shellquery.read_columns(lines, ' ', 99, False)) == rows
@@ -30,20 +31,20 @@ class TestShellQuery(unittest.TestCase):
                 [['a 1'], ['b ', ' 3'], ['c'], [], []]
         )
 
-    def test_read_columns_capturing_group(self):
+    def test_read_columns_capturing_group(self) -> None:
         assert list(shellquery.read_columns(['_ab_ab_'], '(a|b)+', 99, False)) == [['_', '_', '_']]
 
-    def test_read_columns_empty(self):
+    def test_read_columns_empty(self) -> None:
         assert list(shellquery.read_columns([], ' ', 99, True)) == []
 
-    def test_read_columns_max_columns(self):
+    def test_read_columns_max_columns(self) -> None:
         assert list(shellquery.read_columns(['a b c d'], ' ', 2, True)) == [['a', 'b c d']]
         assert list(shellquery.read_columns(['a b c d'], ' ', 1, True)) == [['a b c d']]
 
-    def test_load_rows(self):
-        def do_test():
+    def test_load_rows(self) -> None:
+        def do_test() -> None:
             connection = sqlite3.connect(':memory:')
-            data = [[], [1], [1, 2], [0], [2], [1, 2, 3, 4, 5], [], []]
+            data: List[List[object]] = [[], [1], [1, 2], [0], [2], [1, 2, 3, 4, 5], [], []]
 
             shellquery.load_rows(connection, 'x', data)
             cursor = connection.cursor()
@@ -65,25 +66,25 @@ class TestShellQuery(unittest.TestCase):
         with mock.patch.object(shellquery, 'LOAD_ROWS_MAX_BUFFER', 0):
             do_test()
 
-    def test_load_rows_ugly_name(self):
+    def test_load_rows_ugly_name(self) -> None:
         connection = sqlite3.connect(':memory:')
         # Omit the end quote character
         table_name = r"""`~!@#$%^&*()-_=+{}[]|\;:',<.>/? 中文"""
-        data = []
+        data: List[List[object]] = []
 
         shellquery.load_rows(connection, table_name, data)
         cursor = connection.cursor()
         cursor.execute('SELECT * FROM {}'.format(shellquery.quote_identifier(table_name)))
         assert not cursor.fetchall()
 
-    def test_load_rows_empty(self):
+    def test_load_rows_empty(self) -> None:
         connection = sqlite3.connect(':memory:')
         shellquery.load_rows(connection, 'x', [])
         cursor = connection.cursor()
         cursor.execute('SELECT * FROM x')
         assert cursor.fetchall() == []
 
-    def test_quote_identifier(self):
+    def test_quote_identifier(self) -> None:
         assert shellquery.quote_identifier('foo') == '"foo"'
         assert shellquery.quote_identifier('`]') == '"`]"'
         assert shellquery.quote_identifier('`"') == '[`"]'
@@ -92,7 +93,7 @@ class TestShellQuery(unittest.TestCase):
         with self.assertRaises(ValueError):
             shellquery.quote_identifier('"`]')
 
-    def test_add_from_clause(self):
+    def test_add_from_clause(self) -> None:
         assert shellquery.add_from_clause('c1', 'table') == 'c1 FROM "table" '
         assert shellquery.add_from_clause('c1 from x', 'table') == 'c1 from x'
         assert shellquery.add_from_clause('c1 where true', 'table') == 'c1 FROM "table" where true'
@@ -107,7 +108,7 @@ class TestShellQuery(unittest.TestCase):
         )
         assert shellquery.add_from_clause('c1 limit 1', 'table') == 'c1 FROM "table" limit 1'
 
-    def test_add_select(self):
+    def test_add_select(self) -> None:
         assert shellquery.add_select('x from a') == 'SELECT x from a'
         assert shellquery.add_select(' select x from a') == ' select x from a'
         assert (
@@ -116,16 +117,16 @@ class TestShellQuery(unittest.TestCase):
                 'with tbl(col) as (select * from a) select * from tbl'
         )
 
-    def _run_main_test(self, args, stdin=None):
+    def _run_main_test(self, args: List[str], stdin_str: str = '') -> str:
         """Return the output of running main against the given arguments and standard input"""
         with mock.patch('sys.argv', [''] + args):
-            stdin = io.StringIO(stdin)
+            stdin = io.StringIO(stdin_str)
             stdout = io.StringIO()
             with mock.patch('sys.stdin', stdin), mock.patch('sys.stdout', stdout):
                 shellquery.main()
             return stdout.getvalue()
 
-    def test_main(self):
+    def test_main(self) -> None:
         """Test the whole main method in a complex example"""
         query = """
         select c1, c2 from [test_data/中 文]
@@ -145,12 +146,12 @@ class TestShellQuery(unittest.TestCase):
                 ['0\tNULL', 'This\tfile', 'a\t2', 'screw\tyou', '中文\t1']
         )
 
-    def test_stdin(self):
+    def test_stdin(self) -> None:
         """Test reading from stdin"""
         output = self._run_main_test(['*'], 'boring value')
         assert output == 'boring\tvalue\n'
 
-    def test_unicode_stdin(self):
+    def test_unicode_stdin(self) -> None:
         """Test unicode on stdin, full stack"""
         with open(os.path.join(os.path.dirname(__file__), 'test_data', '中 文')) as data:
             output = subprocess.check_output(
@@ -161,7 +162,7 @@ class TestShellQuery(unittest.TestCase):
             )
         assert output.decode() == '中文\na\n'
 
-    def test_header(self):
+    def test_header(self) -> None:
         """Test the --output-header option"""
         output = self._run_main_test(["'中' AS 文", '--output-header'], 'a')
         assert output.splitlines() == ['文', '中']
@@ -170,7 +171,7 @@ class TestShellQuery(unittest.TestCase):
         output = self._run_main_test(["9 as colname", '-H'])
         assert output.splitlines() == ['colname']
 
-    def test_examples(self):
+    def test_examples(self) -> None:
         """Verify the examples in the argparse help text"""
         progname = sys.executable + ' ' + shellquery.__file__
         for _name, cmd, expected in shellquery.EXAMPLES:
@@ -182,7 +183,7 @@ class TestShellQuery(unittest.TestCase):
             )
             assert output.decode() == expected
 
-    def test_readme(self):
+    def test_readme(self) -> None:
         """Verify the examples in the README"""
         examples = []
         with open(os.path.join(os.path.dirname(__file__), 'README.rst')) as f:
@@ -212,10 +213,10 @@ class TestShellQuery(unittest.TestCase):
             )
             assert output.decode() == expected
 
-    def test_re_split_randomly(self):
+    def test_re_split_randomly(self) -> None:
         """Test re_split against re.split by generating random test cases"""
 
-        def random_string(choices, maxlength):
+        def random_string(choices: str, maxlength: int) -> str:
             length = random.randint(0, maxlength)
             return ''.join(random.choice(choices) for _ in range(length))
 
@@ -240,7 +241,7 @@ class TestShellQuery(unittest.TestCase):
                     shellquery.re_split(regex, string, maxsplit)
             ), "string={}, regex={}, maxsplit={}".format(string, regex, maxsplit)
 
-    def test_re_split(self):
+    def test_re_split(self) -> None:
         test_cases = [
             ('a', 'a', 1),
             ('aaa', 'a', 1),
@@ -257,6 +258,11 @@ class TestShellQuery(unittest.TestCase):
                     shellquery.re_split(compiled, string, maxsplit)
             )
 
-    def test_re_split_empty(self):
+    def test_re_split_empty(self) -> None:
         with self.assertRaisesRegex(ValueError, "empty string"):
             shellquery.re_split(re.compile(''), 'data', 1)
+
+
+class TestMypy(unittest.TestCase):
+    def test_mypy(self) -> None:
+        subprocess.check_call(['mypy', os.path.dirname(__file__)])

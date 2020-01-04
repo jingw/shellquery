@@ -8,7 +8,9 @@ from setuptools import setup
 with open('README.rst') as readme:
     long_description = readme.read()
 with open('shellquery.py') as py:
-    version = re.search(r"__version__ = '(.+?)'", py.read()).group(1)
+    version_match = re.search(r"__version__ = '(.+?)'", py.read())
+    assert version_match is not None
+    version = version_match.group(1)
 with open('dev_requirements.txt') as dev_requirements:
     tests_require = dev_requirements.read().splitlines()
 
@@ -43,5 +45,6 @@ setup(
         'console_scripts': [
             'shq = shellquery:main',
         ],
-    }
+    },
+    python_requires='>=3.6',
 )
