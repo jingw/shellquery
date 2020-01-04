@@ -53,7 +53,7 @@ Installing
 - With pip: ``sudo pip install shellquery``
 - Manually: ``curl -o ~/bin/shq https://raw.githubusercontent.com/jingw/shellquery/master/shellquery.py && chmod +x ~/bin/shq``
 
-You'll need Python 2.7 or Python 3. (Of course, you might want to double check the download to make sure I'm not giving you malware.)
+Python 3 is required.
 
 Development testing
 ===================
@@ -64,19 +64,12 @@ Development testing
 .. image:: http://codecov.io/github/jingw/shellquery/coverage.svg?branch=master
     :target: http://codecov.io/github/jingw/shellquery?branch=master
 
-Python 3::
+Commands::
 
-    virtualenv3 --no-site-packages env3
-    source env3/bin/activate
-    pip3 install -r dev_requirements.txt
-    py.test
-
-And again for Python 2 (after ``deactivate``)::
-
-    virtualenv2 --no-site-packages env2
-    source env2/bin/activate
-    pip2 install -r dev_requirements.txt
-    py.test
+    python -m venv env
+    source env/bin/activate
+    pip install -r dev_requirements.txt
+    pytest
 
 .. |weaselwords| replace:: :sup:`[weasel words]`
 .. _weaselwords: https://en.wikipedia.org/wiki/Wikipedia:Manual_of_Style/Words_to_watch#Unsupported_attributions

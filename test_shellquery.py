@@ -1,6 +1,4 @@
 # coding: utf-8
-from __future__ import absolute_import, print_function, unicode_literals
-
 import io
 import os.path
 import random
@@ -10,15 +8,9 @@ import sre_constants
 import subprocess
 import sys
 import unittest
-
-import mock
+from unittest import mock
 
 import shellquery
-
-if sys.version_info[0] < 3:
-    # monkey patch for python 2 compatibility
-    unittest.TestCase.assertCountEqual = unittest.TestCase.assertItemsEqual
-    unittest.TestCase.assertRaisesRegex = unittest.TestCase.assertRaisesRegexp
 
 
 class TestShellQuery(unittest.TestCase):
@@ -194,7 +186,7 @@ class TestShellQuery(unittest.TestCase):
                 env={'PYTHONIOENCODING': 'utf-8'},
                 stdin=data,
             )
-        self.assertEqual(output.decode('utf-8'), '中文\na\n')
+        self.assertEqual(output.decode(), '中文\na\n')
 
     def test_header(self):
         """Test the --output-header option"""
@@ -215,7 +207,7 @@ class TestShellQuery(unittest.TestCase):
                 shell=True,
                 cwd=os.path.join(os.path.dirname(__file__), 'test_data'),
             )
-            self.assertEqual(output.decode('utf-8'), expected)
+            self.assertEqual(output.decode(), expected)
 
     def test_readme(self):
         """Verify the examples in the README"""
@@ -245,7 +237,7 @@ class TestShellQuery(unittest.TestCase):
                 shell=True,
                 cwd=os.path.join(os.path.dirname(__file__), 'test_data'),
             )
-            self.assertEqual(output.decode('utf-8'), expected)
+            self.assertEqual(output.decode(), expected)
 
     def test_re_split_randomly(self):
         """Test re_split against re.split by generating random test cases"""

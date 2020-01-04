@@ -2,11 +2,10 @@ dist: xenial
 language: python
 python:
   # https://docs.python.org/devguide/#status-of-python-branches
-  - "2.7"
   - "3.5"
   - "3.6"
   - "3.7"
-  - "pypy2.7-6.0"
+  - "3.8"
   - "pypy3.5-6.0"
 before_install: pip install codecov
 install: pip install --upgrade -r dev_requirements.txt

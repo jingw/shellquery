@@ -1,9 +1,6 @@
-#!/usr/bin/env python
-from __future__ import absolute_import, print_function, unicode_literals
+#!/usr/bin/env python3
 import argparse
-import codecs
 import errno
-import io
 import logging
 import os.path
 import re
@@ -102,12 +99,9 @@ def load_file(connection, table_name, delimiter, max_columns, fixed_string):
         rows = read_columns(file, delimiter, max_columns, fixed_string)
         load_rows(connection, table_name, rows)
     if table_name == '-':
-        if sys.version_info[0] < 3:
-            load(codecs.getreader('utf-8')(sys.stdin))
-        else:
-            load(sys.stdin)
+        load(sys.stdin)
     else:
-        with io.open(table_name) as f:
+        with open(table_name) as f:
             load(f)
 
 
@@ -239,9 +233,6 @@ def execute_query(query, delimiter, max_columns, fixed_string):
             except sqlite3.OperationalError as e:
                 no_such_table = 'no such table: '
                 msg = e.args[0]
-                if isinstance(msg, bytes):
-                    assert sys.version_info[0] < 3
-                    msg = msg.decode('utf-8')
                 if msg.startswith(no_such_table):
                     table_name = msg[len(no_such_table):]
                     # SQLite treats "SELECT * FROM foo.log" as database foo, table log
@@ -264,13 +255,7 @@ def print_output(rows, delimiter, header):
         if col is None:
             return 'NULL'
         else:
-            if sys.version_info[0] < 3:
-                if isinstance(col, bytes):
-                    return col.decode('utf-8')
-                else:
-                    return unicode(col)  # noqa
-            else:
-                return str(col)
+            return str(col)
     try:
         if header:
             print(delimiter.join(map(stringify, (col[0] for col in rows.description))))
