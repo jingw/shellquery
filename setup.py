@@ -11,8 +11,6 @@ with open('shellquery.py') as py:
     version_match = re.search(r"__version__ = '(.+?)'", py.read())
     assert version_match is not None
     version = version_match.group(1)
-with open('dev_requirements.txt') as dev_requirements:
-    tests_require = dev_requirements.read().splitlines()
 
 setup(
     name="ShellQuery",
@@ -37,10 +35,6 @@ setup(
         "Topic :: Text Processing",
         "Topic :: Utilities",
     ],
-    tests_require=tests_require,
-    package_data={
-        '': ['*.rst'],
-    },
     entry_points={
         'console_scripts': [
             'shq = shellquery:main',
