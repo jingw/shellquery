@@ -64,6 +64,9 @@ Development testing
 .. image:: http://codecov.io/github/jingw/shellquery/coverage.svg?branch=master
     :target: http://codecov.io/github/jingw/shellquery?branch=master
 
+.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
+    :target: https://github.com/psf/black
+
 Commands::
 
     python -m venv env
