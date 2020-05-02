@@ -7,21 +7,16 @@ import re
 import sqlite3
 import sys
 import tempfile
-
-__version__ = "0.1.4"
-
-from sqlite3 import Cursor
-from sqlite3 import Connection
-
 from typing import IO
+from typing import Iterable
 from typing import Iterator
 from typing import List
-from typing import Pattern
 from typing import Optional
-from typing import Set
-from typing import Iterable
+from typing import Pattern
 from typing import Sequence
+from typing import Set
 
+__version__ = "0.1.4"
 _logger = logging.getLogger(__name__)
 
 EXAMPLES = [
@@ -133,7 +128,7 @@ def main() -> None:
 
 
 def load_file(
-    connection: Connection,
+    connection: sqlite3.Connection,
     table_name: str,
     delimiter: str,
     max_columns: int,
@@ -191,7 +186,7 @@ def read_columns(
 
 
 def load_rows(
-    connection: Connection, table: str, data: Iterable[Sequence[object]]
+    connection: sqlite3.Connection, table: str, data: Iterable[Sequence[object]]
 ) -> None:
     """Create `table` from the given iterable of rows `data`"""
     cur_width = 1
@@ -272,14 +267,14 @@ def quote_identifier(name: str) -> str:
 
 def execute_query(
     query: str, delimiter: str, max_columns: int, fixed_string: bool
-) -> Cursor:
+) -> sqlite3.Cursor:
     processed_query = add_from_clause(add_select(query), "-")
     with tempfile.NamedTemporaryFile() as temp_file:
         connection = sqlite3.connect(temp_file.name)
         # Let SQLite tell me what tables I need to load by repeatedly running the query.
         # This is really hacky but it's more robust than trying to regex parse the query.
         # e.g. this correctly handles aliasing
-        results: Optional[Cursor] = None
+        results: Optional[sqlite3.Cursor] = None
         loaded: Set[str] = set()
         while results is None:
             cursor = connection.cursor()
@@ -307,7 +302,7 @@ def execute_query(
         return results
 
 
-def print_output(rows: Cursor, delimiter: str, header: bool) -> None:
+def print_output(rows: sqlite3.Cursor, delimiter: str, header: bool) -> None:
     def stringify(col: object) -> str:
         if col is None:
             return "NULL"
