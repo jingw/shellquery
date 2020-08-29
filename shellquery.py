@@ -169,7 +169,10 @@ def re_split(regex: Pattern[str], string: str, maxsplit: int) -> List[str]:
 
 
 def read_columns(
-    file: Iterable[str], delimiter: str, max_columns: int, fixed: bool,
+    file: Iterable[str],
+    delimiter: str,
+    max_columns: int,
+    fixed: bool,
 ) -> Iterator[List[str]]:
     """Yield the rows/columns in the given file as a list of lists"""
     col_regex = re.compile(re.escape(delimiter) if fixed else delimiter)

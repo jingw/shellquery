@@ -297,4 +297,6 @@ class TestTools(unittest.TestCase):
         subprocess.check_call(["black", "--check", os.path.dirname(__file__)])
 
     def test_isort(self) -> None:
-        subprocess.check_call(["isort", "--check-only"], cwd=os.path.dirname(__file__))
+        subprocess.check_call(
+            ["isort", "--check-only", "--diff", os.path.dirname(__file__)]
+        )
