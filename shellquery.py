@@ -19,6 +19,12 @@ from typing import Set
 __version__ = "0.1.4"
 _logger = logging.getLogger(__name__)
 
+
+def untested_code() -> None:
+    print("sdsdfsdf")
+    print("sdsdfsdf")
+
+
 EXAMPLES = [
     (
         "Selecting columns",
