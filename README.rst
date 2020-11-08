@@ -58,8 +58,8 @@ Python 3 is required.
 Development testing
 ===================
 
-.. image:: https://travis-ci.org/jingw/shellquery.svg?branch=master
-    :target: https://travis-ci.org/jingw/shellquery
+.. image:: https://github.com/jingw/shellquery/workflows/CI/badge.svg
+    :target: https://github.com/jingw/shellquery/actions?query=workflow%3ACI
 
 .. image:: http://codecov.io/github/jingw/shellquery/coverage.svg?branch=master
     :target: http://codecov.io/github/jingw/shellquery?branch=master
