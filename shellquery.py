@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+from __future__ import annotations
+
 import argparse
 import errno
 import logging
@@ -10,11 +12,7 @@ import tempfile
 from typing import IO
 from typing import Iterable
 from typing import Iterator
-from typing import List
-from typing import Optional
-from typing import Pattern
 from typing import Sequence
-from typing import Set
 
 __version__ = "0.1.4"
 _logger = logging.getLogger(__name__)
@@ -145,7 +143,7 @@ def load_file(
             load(f)
 
 
-def re_split(regex: Pattern[str], string: str, maxsplit: int) -> List[str]:
+def re_split(regex: re.Pattern[str], string: str, maxsplit: int) -> list[str]:
     """Same as regex.split(string, maxsplit), but does not include the text in capturing groups.
 
     https://docs.python.org/3/library/re.html#re.split
@@ -173,7 +171,7 @@ def read_columns(
     delimiter: str,
     max_columns: int,
     fixed: bool,
-) -> Iterator[List[str]]:
+) -> Iterator[list[str]]:
     """Yield the rows/columns in the given file as a list of lists"""
     col_regex = re.compile(re.escape(delimiter) if fixed else delimiter)
     for line in file:
@@ -199,7 +197,7 @@ def load_rows(
     )
     connection.execute(create_table_stmt)
 
-    current_rows: List[List[object]] = []
+    current_rows: list[list[object]] = []
 
     def flush() -> None:
         placeholders = ",".join("?" * cur_width)
@@ -277,8 +275,8 @@ def execute_query(
         # Let SQLite tell me what tables I need to load by repeatedly running the query.
         # This is really hacky but it's more robust than trying to regex parse the query.
         # e.g. this correctly handles aliasing
-        results: Optional[sqlite3.Cursor] = None
-        loaded: Set[str] = set()
+        results: sqlite3.Cursor | None = None
+        loaded: set[str] = set()
         while results is None:
             cursor = connection.cursor()
             try:

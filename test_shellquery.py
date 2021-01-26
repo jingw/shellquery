@@ -1,4 +1,6 @@
 # coding: utf-8
+from __future__ import annotations
+
 import io
 import os.path
 import random
@@ -8,7 +10,6 @@ import sre_constants
 import subprocess
 import sys
 import unittest
-from typing import List
 from unittest import mock
 
 import shellquery
@@ -52,7 +53,7 @@ class TestShellQuery(unittest.TestCase):
     def test_load_rows(self) -> None:
         def do_test() -> None:
             connection = sqlite3.connect(":memory:")
-            data: List[List[object]] = [
+            data: list[list[object]] = [
                 [],
                 [1],
                 [1, 2],
@@ -87,7 +88,7 @@ class TestShellQuery(unittest.TestCase):
         connection = sqlite3.connect(":memory:")
         # Omit the end quote character
         table_name = r"""`~!@#$%^&*()-_=+{}[]|\;:',<.>/? 中文"""
-        data: List[List[object]] = []
+        data: list[list[object]] = []
 
         shellquery.load_rows(connection, table_name, data)
         cursor = connection.cursor()
@@ -142,7 +143,7 @@ class TestShellQuery(unittest.TestCase):
             == "with tbl(col) as (select * from a) select * from tbl"
         )
 
-    def _run_main_test(self, args: List[str], stdin_str: str = "") -> str:
+    def _run_main_test(self, args: list[str], stdin_str: str = "") -> str:
         """Return the output of running main against the given arguments and standard input"""
         with mock.patch("sys.argv", [""] + args):
             stdin = io.StringIO(stdin_str)

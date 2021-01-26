@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         # https://docs.python.org/devguide/#status-of-python-branches
-        python-version: [3.6, 3.7, 3.8]
+        python-version: [3.7, 3.8, 3.9]
 
     steps:
       - uses: actions/checkout@v2
