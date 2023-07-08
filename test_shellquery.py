@@ -6,7 +6,6 @@ import os.path
 import random
 import re
 import sqlite3
-import sre_constants
 import subprocess
 import sys
 import unittest
@@ -255,7 +254,7 @@ class TestShellQuery(unittest.TestCase):
             try:
                 # Replace '(' to get a non-capturing group
                 regex = re.compile(random_string(re_choices, 10).replace("(", "(?:"))
-            except sre_constants.error:
+            except re.error:
                 # ignore malformed regexes
                 continue
             if regex.match(""):
