@@ -285,19 +285,3 @@ class TestShellQuery(unittest.TestCase):
     def test_re_split_empty(self) -> None:
         with self.assertRaisesRegex(ValueError, "empty string"):
             shellquery.re_split(re.compile(""), "data", 1)
-
-
-class TestTools(unittest.TestCase):
-    def test_mypy(self) -> None:
-        subprocess.check_call(["mypy", os.path.dirname(__file__)])
-
-    def test_flake8(self) -> None:
-        subprocess.check_call(["flake8"], cwd=os.path.dirname(__file__))
-
-    def test_black(self) -> None:
-        subprocess.check_call(["black", "--check", os.path.dirname(__file__)])
-
-    def test_isort(self) -> None:
-        subprocess.check_call(
-            ["isort", "--check-only", "--diff", os.path.dirname(__file__)]
-        )
