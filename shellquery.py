@@ -234,7 +234,7 @@ def add_from_clause(query: str, table: str) -> str:
         # already has a from clause
         return query
     else:
-        clause = "FROM {} ".format(quote_identifier(table))
+        clause = f"FROM {quote_identifier(table)} "
         # These are in order of how they should appear in a proper SQL statement
         key_words = [r"WHERE", r"GROUP\s+BY", r"ORDER\s+BY", "LIMIT"]
         for word in key_words:
@@ -263,7 +263,7 @@ def quote_identifier(name: str) -> str:
         return "`" + name + "`"
     if "]" not in name:
         return "[" + name + "]"
-    raise ValueError("Unsupported identifier: {}".format(name))
+    raise ValueError(f"Unsupported identifier: {name}")
 
 
 def execute_query(
@@ -315,7 +315,7 @@ def print_output(rows: sqlite3.Cursor, delimiter: str, header: bool) -> None:
             print(delimiter.join(map(stringify, (col[0] for col in rows.description))))
         for row in rows:
             print(delimiter.join(map(stringify, row)))
-    except IOError as e:
+    except OSError as e:
         if e.errno == errno.EPIPE:
             # ignore, happens when piping the output to things like `head`
             pass

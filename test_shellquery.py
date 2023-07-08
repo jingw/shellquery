@@ -1,4 +1,3 @@
-# coding: utf-8
 from __future__ import annotations
 
 import io
@@ -91,9 +90,7 @@ class TestShellQuery(unittest.TestCase):
 
         shellquery.load_rows(connection, table_name, data)
         cursor = connection.cursor()
-        cursor.execute(
-            "SELECT * FROM {}".format(shellquery.quote_identifier(table_name))
-        )
+        cursor.execute(f"SELECT * FROM {shellquery.quote_identifier(table_name)}")
         assert not cursor.fetchall()
 
     def test_load_rows_empty(self) -> None:
@@ -264,7 +261,7 @@ class TestShellQuery(unittest.TestCase):
             split_result = regex.split(string, maxsplit)
             assert split_result == shellquery.re_split(
                 regex, string, maxsplit
-            ), "string={}, regex={}, maxsplit={}".format(string, regex, maxsplit)
+            ), f"{string=}, {regex=}, {maxsplit=}"
 
     def test_re_split(self) -> None:
         test_cases = [

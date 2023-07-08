@@ -5,3 +5,4 @@ mypy
 pytest
 pytest-cov
 pytest-random
+pyupgrade
