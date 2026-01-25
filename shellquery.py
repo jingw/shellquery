@@ -9,10 +9,10 @@ import re
 import sqlite3
 import sys
 import tempfile
+from collections.abc import Iterable
+from collections.abc import Iterator
+from collections.abc import Sequence
 from typing import IO
-from typing import Iterable
-from typing import Iterator
-from typing import Sequence
 
 __version__ = "0.1.4"
 _logger = logging.getLogger(__name__)
@@ -52,9 +52,7 @@ ShellQuery {version}: Command line SQL on plain text files and standard input.
 
 Example usage:
 {examples}
-""".format(
-    version=__version__, examples=format_examples()
-)
+""".format(version=__version__, examples=format_examples())
 
 QUERY_HELP = """\
 A SQL query to run. \
