@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import contextlib
 import errno
 import logging
 import os.path
@@ -117,10 +118,14 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    results = execute_query(
-        args.query, args.delimiter, args.max_columns, args.fixed_string
-    )
-    print_output(results, args.output_delimiter, args.output_header)
+    with (
+        tempfile.NamedTemporaryFile() as temp_file,
+        contextlib.closing(sqlite3.connect(temp_file.name)) as connection,
+    ):
+        results = execute_query(
+            connection, args.query, args.delimiter, args.max_columns, args.fixed_string
+        )
+        print_output(results, args.output_delimiter, args.output_header)
 
 
 def load_file(
@@ -265,40 +270,40 @@ def quote_identifier(name: str) -> str:
 
 
 def execute_query(
-    query: str, delimiter: str, max_columns: int, fixed_string: bool
+    connection: sqlite3.Connection,
+    query: str,
+    delimiter: str,
+    max_columns: int,
+    fixed_string: bool,
 ) -> sqlite3.Cursor:
     processed_query = add_from_clause(add_select(query), "-")
-    with tempfile.NamedTemporaryFile() as temp_file:
-        connection = sqlite3.connect(temp_file.name)
-        # Let SQLite tell me what tables I need to load by repeatedly running the query.
-        # This is really hacky but it's more robust than trying to regex parse the query.
-        # e.g. this correctly handles aliasing
-        results: sqlite3.Cursor | None = None
-        loaded: set[str] = set()
-        while results is None:
-            cursor = connection.cursor()
-            try:
-                cursor.execute(processed_query)
-            except sqlite3.OperationalError as e:
-                no_such_table = "no such table: "
-                msg: str = e.args[0]
-                if msg.startswith(no_such_table):
-                    table_name = msg[len(no_such_table) :]
-                    # SQLite treats "SELECT * FROM foo.log" as database foo, table log
-                    # We could try to magically handle this, but SELECT * FROM "foo.log" gives the
-                    # same message.
-                    error = "Should have already loaded {}. You might need to quote the table name"
-                    assert table_name not in loaded, error.format(table_name)
-                    load_file(
-                        connection, table_name, delimiter, max_columns, fixed_string
-                    )
-                    loaded.add(table_name)
-                else:
-                    _logger.error("Failed to execute: %s", processed_query)
-                    raise
+    # Let SQLite tell me what tables I need to load by repeatedly running the query.
+    # This is really hacky, but it's more robust than trying to regex parse the query.
+    # e.g. this correctly handles aliasing
+    results: sqlite3.Cursor | None = None
+    loaded: set[str] = set()
+    while results is None:
+        cursor = connection.cursor()
+        try:
+            cursor.execute(processed_query)
+        except sqlite3.OperationalError as e:
+            no_such_table = "no such table: "
+            msg: str = e.args[0]
+            if msg.startswith(no_such_table):
+                table_name = msg[len(no_such_table) :]
+                # SQLite treats "SELECT * FROM foo.log" as database foo, table log
+                # We could try to magically handle this, but SELECT * FROM "foo.log" gives the
+                # same message.
+                error = "Should have already loaded {}. You might need to quote the table name"
+                assert table_name not in loaded, error.format(table_name)
+                load_file(connection, table_name, delimiter, max_columns, fixed_string)
+                loaded.add(table_name)
             else:
-                results = cursor
-        return results
+                _logger.error("Failed to execute: %s", processed_query)
+                raise
+        else:
+            results = cursor
+    return results
 
 
 def print_output(rows: sqlite3.Cursor, delimiter: str, header: bool) -> None:

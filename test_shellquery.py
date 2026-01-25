@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import contextlib
 import io
 import os.path
 import random
@@ -7,11 +8,19 @@ import re
 import sqlite3
 import subprocess
 import sys
+from collections.abc import Iterator
 from unittest import mock
 
 import pytest
 
 import shellquery
+from shellquery import LOAD_ROWS_MAX_BUFFER
+
+
+@pytest.fixture
+def memory_connection() -> Iterator[sqlite3.Connection]:
+    with contextlib.closing(sqlite3.connect(":memory:")) as connection:
+        yield connection
 
 
 def test_read_columns() -> None:
@@ -50,57 +59,52 @@ def test_read_columns_max_columns() -> None:
     assert list(shellquery.read_columns(["a b c d"], " ", 1, True)) == [["a b c d"]]
 
 
-def test_load_rows() -> None:
-    def do_test() -> None:
-        connection = sqlite3.connect(":memory:")
-        data: list[list[object]] = [
-            [],
-            [1],
-            [1, 2],
-            [0],
-            [2],
-            [1, 2, 3, 4, 5],
-            [],
-            [],
-        ]
+@pytest.mark.parametrize("load_rows_max_buffer", [LOAD_ROWS_MAX_BUFFER, 1, 0])
+def test_load_rows(
+    load_rows_max_buffer: int, memory_connection: sqlite3.Connection
+) -> None:
+    data: list[list[object]] = [
+        [],
+        [1],
+        [1, 2],
+        [0],
+        [2],
+        [1, 2, 3, 4, 5],
+        [],
+        [],
+    ]
 
-        shellquery.load_rows(connection, "x", data)
-        cursor = connection.cursor()
-        cursor.execute("SELECT * FROM x ORDER BY c1, c2, c3, c4, c5")
-        assert cursor.fetchall() == [
-            (None,) * 5,
-            (None,) * 5,
-            (None,) * 5,
-            ("0",) + (None,) * 4,
-            ("1",) + (None,) * 4,
-            ("1", "2") + (None,) * 3,
-            ("1", "2", "3", "4", "5"),
-            ("2",) + (None,) * 4,
-        ]
+    with mock.patch.object(shellquery, "LOAD_ROWS_MAX_BUFFER", load_rows_max_buffer):
+        shellquery.load_rows(memory_connection, "x", data)
 
-    do_test()
-    with mock.patch.object(shellquery, "LOAD_ROWS_MAX_BUFFER", 1):
-        do_test()
-    with mock.patch.object(shellquery, "LOAD_ROWS_MAX_BUFFER", 0):
-        do_test()
+    cursor = memory_connection.cursor()
+    cursor.execute("SELECT * FROM x ORDER BY c1, c2, c3, c4, c5")
+    assert cursor.fetchall() == [
+        (None,) * 5,
+        (None,) * 5,
+        (None,) * 5,
+        ("0",) + (None,) * 4,
+        ("1",) + (None,) * 4,
+        ("1", "2") + (None,) * 3,
+        ("1", "2", "3", "4", "5"),
+        ("2",) + (None,) * 4,
+    ]
 
 
-def test_load_rows_ugly_name() -> None:
-    connection = sqlite3.connect(":memory:")
+def test_load_rows_ugly_name(memory_connection: sqlite3.Connection) -> None:
     # Omit the end quote character
     table_name = r"""`~!@#$%^&*()-_=+{}[]|\;:',<.>/? 中文"""
     data: list[list[object]] = []
 
-    shellquery.load_rows(connection, table_name, data)
-    cursor = connection.cursor()
+    shellquery.load_rows(memory_connection, table_name, data)
+    cursor = memory_connection.cursor()
     cursor.execute(f"SELECT * FROM {shellquery.quote_identifier(table_name)}")
     assert not cursor.fetchall()
 
 
-def test_load_rows_empty() -> None:
-    connection = sqlite3.connect(":memory:")
-    shellquery.load_rows(connection, "x", [])
-    cursor = connection.cursor()
+def test_load_rows_empty(memory_connection: sqlite3.Connection) -> None:
+    shellquery.load_rows(memory_connection, "x", [])
+    cursor = memory_connection.cursor()
     cursor.execute("SELECT * FROM x")
     assert cursor.fetchall() == []
 
